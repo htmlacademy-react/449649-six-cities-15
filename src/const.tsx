@@ -9,4 +9,10 @@ enum AppRoute {
   Offer = '/offer/:id',
 }
 
-export { Setting, AppRoute };
+enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
+export { Setting, AppRoute, AuthorizationStatus };
