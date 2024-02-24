@@ -1,12 +1,17 @@
 import Header from '../../components/header/header';
 import CitiesTabs from '../../components/cities-tabs/cities-tabs';
-import CityCard from '../../components/city-card/city-card';
+import { Offers } from '../../types/offer';
+import CitiesList from '../../components/cities-list/cities-list';
+import { useState } from 'react';
 
 type MainPageProps = {
   placesCount: number;
+  offers: Offers;
 }
 
-function MainPage(props: MainPageProps): JSX.Element {
+function MainPage({ placesCount, offers }: MainPageProps): JSX.Element {
+  const [cardHoverId, setCardHoverId] = useState<string | null>(null);
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -16,7 +21,7 @@ function MainPage(props: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{props.placesCount} places to stay in Amsterdam</b>
+              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -44,15 +49,11 @@ function MainPage(props: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CityCard />
-                <CityCard />
-                <CityCard />
-                <CityCard />
-                <CityCard />
+                <CitiesList offers={offers} setCityCardHoverId={setCardHoverId} />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map">{cardHoverId}</section>
             </div>
           </div>
         </div>

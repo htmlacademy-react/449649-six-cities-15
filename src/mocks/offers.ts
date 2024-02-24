@@ -35,7 +35,8 @@ export const offers: Offers = [
     images: [
       'https://15.design.htmlacademy.pro/static/hotel/1.jpg'
     ],
-    maxAdults: 4
+    maxAdults: 4,
+    previewImage: 'img/apartment-02.jpg'
   },
   {
     id: '2de453aa-9e81-4e1b-b48c-9e14f4d8e4ce',
@@ -56,7 +57,7 @@ export const offers: Offers = [
       zoom: 8
     },
     isFavorite: true,
-    isPremium: true,
+    isPremium: false,
     rating: 5,
     description: 'Escape the city and enjoy the tranquility of this charming countryside house.',
     bedrooms: 2,
@@ -72,7 +73,8 @@ export const offers: Offers = [
     images: [
       'https://15.design.htmlacademy.pro/static/hotel/2.jpg'
     ],
-    maxAdults: 6
+    maxAdults: 6,
+    previewImage: 'img/apartment-01.jpg'
   },
   {
     id: '17bd4e2d-8dbb-4f2e-ba8f-6a1f8d219a2d',
@@ -110,7 +112,8 @@ export const offers: Offers = [
     images: [
       'https://15.design.htmlacademy.pro/static/hotel/3.jpg'
     ],
-    maxAdults: 2
+    maxAdults: 2,
+    previewImage: 'img/apartment-02.jpg'
   },
   {
     id: 'f26a845c-7c11-4b2c-8f78-02c2389e9717',
@@ -148,6 +151,7 @@ export const offers: Offers = [
     images: [
       'https://15.design.htmlacademy.pro/static/hotel/4.jpg'
     ],
-    maxAdults: 8
+    maxAdults: 8,
+    previewImage: 'img/apartment-03.jpg'
   }
 ];
