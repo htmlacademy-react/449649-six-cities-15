@@ -9,8 +9,12 @@ function Header(): JSX.Element {
         <div className="header__wrapper">
           <Logo />
           <nav className="header__nav">
-            <UserItem />
-            <SignOutButton />
+            <li className="header__nav-item user">
+              <UserItem />
+            </li>
+            <li className="header__nav-item">
+              <SignOutButton />
+            </li>
           </nav>
         </div>
       </div>
