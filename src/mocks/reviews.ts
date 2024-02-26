@@ -6,7 +6,7 @@ export const reviews: Reviews = [
     'date': '2019-05-08T14:13:56.569Z',
     'user': {
       'name': 'Oliver Conner',
-      'avatarUrl': 'https://url-to-image/image.png',
+      'avatarUrl': 'https://15.design.htmlacademy.pro/static/avatar/1.jpg',
       'isPro': false
     },
     'comment': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -17,7 +17,7 @@ export const reviews: Reviews = [
     'date': '2019-06-12T09:45:32.123Z',
     'user': {
       'name': 'Sophia Smith',
-      'avatarUrl': 'https://url-to-image/image2.png',
+      'avatarUrl': 'https://15.design.htmlacademy.pro/static/avatar/2.jpg',
       'isPro': true
     },
     'comment': 'I had a wonderful time at this place! The location is perfect and the apartment is cozy and clean.',
@@ -28,7 +28,7 @@ export const reviews: Reviews = [
     'date': '2019-07-25T18:30:00.000Z',
     'user': {
       'name': 'David Johnson',
-      'avatarUrl': 'https://url-to-image/image3.png',
+      'avatarUrl': 'https://15.design.htmlacademy.pro/static/avatar/3.jpg',
       'isPro': false
     },
     'comment': 'The view from the apartment is breathtaking! Definitely recommend it to anyone visiting Amsterdam.',
@@ -39,7 +39,7 @@ export const reviews: Reviews = [
     'date': '2019-08-30T12:15:00.000Z',
     'user': {
       'name': 'Emma Wilson',
-      'avatarUrl': 'https://url-to-image/image4.png',
+      'avatarUrl': 'https://15.design.htmlacademy.pro/static/avatar/4.jpg',
       'isPro': true
     },
     'comment': 'The host was very friendly and accommodating. The apartment exceeded our expectations!',
