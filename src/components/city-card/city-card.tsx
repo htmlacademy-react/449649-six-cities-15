@@ -1,5 +1,6 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 type CityCardProps = {
   offer: Offer;
@@ -7,7 +8,8 @@ type CityCardProps = {
 }
 
 function CityCard({ offer, setCityCardHoverId }: CityCardProps): JSX.Element {
-  const { title, type, price, id, isPremium, rating, previewImage } = offer;
+  const { id, title, type, price, isFavorite, isPremium, rating, previewImage } = offer;
+  const [isFavoriteCard, setIsFavoriteCard] = useState(isFavorite);
 
   const handleMouseOver = () => {
     setCityCardHoverId(id);
@@ -37,8 +39,8 @@ function CityCard({ offer, setCityCardHoverId }: CityCardProps): JSX.Element {
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button
-            className="place-card__bookmark-button button"
+          <button onClick={() => setIsFavoriteCard(!isFavoriteCard)}
+            className={`place-card__bookmark-button ${isFavoriteCard ? 'place-card__bookmark-button--active' : ''} button`}
             type="button"
           >
             <svg
