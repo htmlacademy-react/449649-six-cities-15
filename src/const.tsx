@@ -16,6 +16,14 @@ const CITIES: string[] = [
   'Dusseldorf',
 ];
 
+const RATING_MAP = {
+  'perfect': '5',
+  'good': '4',
+  'not bad': '3',
+  'badly': '2',
+  'terribly': '1'
+};
+
 enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -29,4 +37,4 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export { Setting, CITIES, USER_INFO, AppRoute, AuthorizationStatus };
+export { Setting, CITIES, USER_INFO, RATING_MAP, AppRoute, AuthorizationStatus };

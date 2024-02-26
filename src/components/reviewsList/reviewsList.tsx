@@ -1,4 +1,5 @@
 import { Reviews } from '../../types/review';
+import CommentForm from '../comment-form/comment-form';
 import ReviewItem from '../review/review';
 
 type ReviewsProps = {
@@ -14,6 +15,7 @@ function ReviewsList({ reviews }: ReviewsProps): JSX.Element {
       <ul className="reviews__list">
         {reviews.map((review) => (<ReviewItem key={review.id} review={review} />))}
       </ul>
+      <CommentForm />
     </section>
   );
 }
