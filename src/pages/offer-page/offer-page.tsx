@@ -13,7 +13,7 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
   const params = useParams();
   const offerId = params.id;
   const selectedOffer = offers.filter((offer) => offer.id === offerId)[0];
-  const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, images, host, goods} = selectedOffer;
+  const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, images, host, goods } = selectedOffer;
   const { name, isPro, avatarUrl } = host;
   return (
     <div className="page">
@@ -95,7 +95,7 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
                   <p className="offer__text">{description}</p>
                 </div>
               </div>
-              <ReviewsList reviews = {reviews} />
+              <ReviewsList reviews={reviews} />
             </div>
           </div>
           <section className="offer__map map" />

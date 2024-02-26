@@ -7,6 +7,13 @@ const USER_INFO = {
   favoriteCount: 3
 };
 
+const SORTING_OPTIONS = {
+  POPULAR: 'Popular',
+  PRICE_LOW_TO_HIGH: 'Price: low to high',
+  PRICE_HIGH_TO_LOW: 'Price: high to low',
+  TOP_RATED_FIRST: 'Top rated first'
+};
+
 const CITIES: string[] = [
   'Paris',
   'Cologne',
@@ -37,4 +44,4 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export { Setting, CITIES, USER_INFO, RATING_MAP, AppRoute, AuthorizationStatus };
+export { Setting, SORTING_OPTIONS, CITIES, USER_INFO, RATING_MAP, AppRoute, AuthorizationStatus };
