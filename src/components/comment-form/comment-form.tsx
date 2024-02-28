@@ -2,17 +2,16 @@ import { useState, ChangeEvent, Fragment, FormEvent } from 'react';
 import { RATING_MAP } from '../../const';
 
 function CommentForm(): JSX.Element {
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState({
     rating: '0',
     comment: '',
   });
 
-  type ChangeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setValue: React.Dispatch<React.SetStateAction<{ rating: string; comment: string }>>) => void;
-
-  const handleChange: ChangeHandler = (event, setValue) => {
-    setValue((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
     }));
   };
 
@@ -35,8 +34,8 @@ function CommentForm(): JSX.Element {
                 value={score}
                 id={`${score}-stars`}
                 type="radio"
-                checked={form.rating === score}
-                onChange={(e) => setForm({ ...form, rating: e.target.value })}
+                checked={formData.rating === score}
+                onChange={handleChange}
               />
               <label
                 htmlFor={`${score}-stars`}
@@ -56,8 +55,8 @@ function CommentForm(): JSX.Element {
         id="review"
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={form.comment}
-        onChange={(event) => handleChange(event, setForm)}
+        value={formData.comment}
+        onChange={handleChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
