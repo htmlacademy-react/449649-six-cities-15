@@ -67,7 +67,7 @@ function CommentForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-        //disabled
+          disabled = {formData.comment.length < 50 || formData.rating === '0'}
         >
           Submit
         </button>
