@@ -1,22 +1,22 @@
-import { Offer } from '../../types/offer';
+import { Offer } from '../../types/types';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-type CityCardProps = {
+type OfferCardProps = {
   offer: Offer;
-  setCityCardHoverId(id: string | null): void;
+  setOfferCardHoverId(id: string | null): void;
 }
 
-function CityCard({ offer, setCityCardHoverId }: CityCardProps): JSX.Element {
+function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element {
   const { id, title, type, price, isFavorite, isPremium, rating, previewImage } = offer;
   const [isFavoriteCard, setIsFavoriteCard] = useState(isFavorite);
 
   const handleMouseOver = () => {
-    setCityCardHoverId(id);
+    setOfferCardHoverId(id);
   };
 
   const handleMouseOut = () => {
-    setCityCardHoverId(null);
+    setOfferCardHoverId(null);
   };
 
   return (
@@ -70,4 +70,4 @@ function CityCard({ offer, setCityCardHoverId }: CityCardProps): JSX.Element {
   );
 }
 
-export default CityCard;
+export default OfferCard;

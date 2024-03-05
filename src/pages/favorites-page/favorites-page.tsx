@@ -1,5 +1,5 @@
 import Header from '../../components/header/header';
-import { Offers } from '../../types/offer';
+import { Offers } from '../../types/types';
 import { Link } from 'react-router-dom';
 
 type FavoritesPageProps = {
