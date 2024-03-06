@@ -37,9 +37,7 @@ function MainPage({ placesCount, city, offers, points }: MainPageProps): JSX.Ele
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map city={city} points={points} selectedOffer={selectedOffer} />
-              </section>
+              <Map city={city} points={points} selectedOffer={selectedOffer} />
             </div>
           </div>
         </div>
