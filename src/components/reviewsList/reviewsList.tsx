@@ -1,4 +1,4 @@
-import { Reviews } from '../../types/review';
+import { Reviews } from '../../types/types';
 import CommentForm from '../comment-form/comment-form';
 import ReviewItem from '../review/review';
 

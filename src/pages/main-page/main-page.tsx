@@ -1,17 +1,25 @@
 import Header from '../../components/header/header';
 import CitiesTabs from '../../components/cities-tabs/cities-tabs';
-import { Offers } from '../../types/offer';
-import CitiesList from '../../components/cities-list/cities-list';
+import { Offers, Offer, Points, City } from '../../types/types';
+import OffersList from '../../components/offer-list/offers-list';
 import { useState } from 'react';
 import SortingForm from '../../components/sorting-form/sorting-form';
+import Map from '../../components/map/map';
 
 type MainPageProps = {
   placesCount: number;
+  city: City;
   offers: Offers;
+  points: Points;
 }
 
-function MainPage({ placesCount, offers }: MainPageProps): JSX.Element {
-  const [cardHoverId, setCardHoverId] = useState<string | null>(null);
+function MainPage({ placesCount, city, offers, points }: MainPageProps): JSX.Element {
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+
+  const handleOfferHover = (offerId: string) => {
+    const currentOffer = offers.find((offer) => offer.id === offerId);
+    setSelectedOffer(currentOffer);
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -25,11 +33,11 @@ function MainPage({ placesCount, offers }: MainPageProps): JSX.Element {
               <b className="places__found">{placesCount} places to stay in Amsterdam</b>
               <SortingForm />
               <div className="cities__places-list places__list tabs__content">
-                <CitiesList offers={offers} setCityCardHoverId={setCardHoverId} />
+                <OffersList offers={offers} setOfferCardHoverId={handleOfferHover} />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">{cardHoverId}</section>
+              <Map city={city} points={points} selectedOffer={selectedOffer} />
             </div>
           </div>
         </div>

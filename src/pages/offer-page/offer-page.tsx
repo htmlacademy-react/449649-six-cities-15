@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Offers } from '../../types/offer';
-import { Reviews } from '../../types/review';
+import { Offers, Reviews } from '../../types/types';
 import Header from '../../components/header/header';
 import ReviewsList from '../../components/reviewsList/reviewsList';
 

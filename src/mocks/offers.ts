@@ -1,6 +1,6 @@
-import { Offers } from '../types/offer';
+import { Offers } from '../types/types';
 
-export const offers: Offers = [
+export const OFFERS: Offers = [
   {
     id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
@@ -8,16 +8,9 @@ export const offers: Offers = [
     price: 120,
     city: {
       name: 'Amsterdam',
-      location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10
-      }
-    },
-    location: {
       latitude: 52.35514938496378,
       longitude: 4.673877537499948,
-      zoom: 8
+      zoom: 10
     },
     isFavorite: true,
     isPremium: false,
@@ -44,17 +37,10 @@ export const offers: Offers = [
     type: 'house',
     price: 200,
     city: {
-      name: 'London',
-      location: {
-        latitude: 51.5074,
-        longitude: -0.1278,
-        zoom: 10
-      }
-    },
-    location: {
-      latitude: 51.5171,
-      longitude: -0.1062,
-      zoom: 8
+      name: 'Amsterdam',
+      latitude: 51.5074,
+      longitude: -0.1278,
+      zoom: 10
     },
     isFavorite: true,
     isPremium: false,
@@ -82,17 +68,10 @@ export const offers: Offers = [
     type: 'apartment',
     price: 180,
     city: {
-      name: 'New York',
-      location: {
-        latitude: 40.7128,
-        longitude: -74.006,
-        zoom: 10
-      }
-    },
-    location: {
-      latitude: 40.7243,
-      longitude: -74.0018,
-      zoom: 8
+      name: 'Amsterdam',
+      latitude: 40.7128,
+      longitude: -74.006,
+      zoom: 10
     },
     isFavorite: false,
     isPremium: true,
@@ -121,17 +100,10 @@ export const offers: Offers = [
     type: 'villa',
     price: 350,
     city: {
-      name: 'Bali',
-      location: {
-        latitude: -8.409518,
-        longitude: 115.188919,
-        zoom: 10
-      }
-    },
-    location: {
-      latitude: -8.694798,
-      longitude: 115.259321,
-      zoom: 8
+      name: 'Amsterdam',
+      latitude: -8.409518,
+      longitude: 115.188919,
+      zoom: 10
     },
     isFavorite: true,
     isPremium: true,
