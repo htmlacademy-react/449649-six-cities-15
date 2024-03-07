@@ -41,7 +41,7 @@ function Map({ className, city, offers, selectedOffer }: MapProps): JSX.Element 
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer, city.lat, city.lng, city.zoom]);
+  }, [map, offers, selectedOffer]);
 
   return <div style={{ height: '500px' }} className={className} ref={mapRef}></div>;
 }
