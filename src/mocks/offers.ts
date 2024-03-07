@@ -15,7 +15,7 @@ export const OFFERS: Offers = [
     location: {
       lat: 52.3909553943508,
       lng: 4.85309666406198,
-      zoom: 20
+      zoom: 50
     },
     isFavorite: true,
     isPremium: false,

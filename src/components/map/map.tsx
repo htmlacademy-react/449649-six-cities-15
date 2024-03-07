@@ -12,20 +12,15 @@ type MapProps = {
   selectedOffer: Offer | undefined;
 };
 
-const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
-
-const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
+function createCustomIcon(iconUrl: string): Icon {
+  return new Icon({
+    iconUrl: iconUrl,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40]
+  });
+}
 
 function Map({ className, city, offers, selectedOffer }: MapProps): JSX.Element {
-
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -33,25 +28,20 @@ function Map({ className, city, offers, selectedOffer }: MapProps): JSX.Element 
     if (map) {
       const markerLayer = layerGroup().addTo(map);
       offers.forEach((offer) => {
-        const marker = new Marker({
-          lat: offer.location.lat,
-          lng: offer.location.lng
+        const marker = new Marker([offer.location.lat, offer.location.lng], {
+          icon: selectedOffer !== undefined && offer.id === selectedOffer.id
+            ? createCustomIcon(URL_MARKER_CURRENT)
+            : createCustomIcon(URL_MARKER_DEFAULT)
         });
 
-        marker
-          .setIcon(
-            selectedOffer !== undefined && offer.id === selectedOffer.id
-              ? currentCustomIcon
-              : defaultCustomIcon
-          )
-          .addTo(markerLayer);
+        marker.addTo(markerLayer);
       });
 
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, selectedOffer, city.lat, city.lng, city.zoom]);
 
   return <div style={{ height: '500px' }} className={className} ref={mapRef}></div>;
 }

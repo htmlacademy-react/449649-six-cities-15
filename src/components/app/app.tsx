@@ -21,7 +21,7 @@ function App({ placesCount, city, offers, reviews }: AppPageProps): JSX.Element 
       <Routes>
         <Route path={AppRoute.Main} element={<MainPage placesCount={placesCount} city={city} offers={offers} />} />
         <Route path={AppRoute.Login} element={<LoginPage />} />
-        <Route path={AppRoute.Offer} element={<OfferPage offers={offers} reviews={reviews} />} />
+        <Route path={AppRoute.Offer} element={<OfferPage city={city} offers={offers} reviews={reviews} />} />
         <Route path={AppRoute.Favorites} element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}><FavoritesPage offers={offers} /></PrivateRoute>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
