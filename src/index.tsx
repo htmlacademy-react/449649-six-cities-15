@@ -4,7 +4,6 @@ import App from './components/app/app';
 import { Setting } from './const';
 import { OFFERS } from './mocks/offers';
 import { REVIEWS } from './mocks/reviews';
-import { POINTS } from './mocks/points';
 import { CITY } from './mocks/city';
 
 const root = ReactDOM.createRoot(
@@ -18,7 +17,6 @@ root.render(
       city={CITY}
       offers={OFFERS}
       reviews={REVIEWS}
-      points={POINTS}
     />
   </React.StrictMode>,
 );
