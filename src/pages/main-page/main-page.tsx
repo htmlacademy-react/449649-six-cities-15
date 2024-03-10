@@ -1,6 +1,6 @@
 import Header from '../../components/header/header';
 import CitiesTabs from '../../components/cities-tabs/cities-tabs';
-import { Offers, Offer, Points, City } from '../../types/types';
+import { Offers, Offer, City } from '../../types/types';
 import OffersList from '../../components/offer-list/offers-list';
 import { useState } from 'react';
 import SortingForm from '../../components/sorting-form/sorting-form';
@@ -10,10 +10,9 @@ type MainPageProps = {
   placesCount: number;
   city: City;
   offers: Offers;
-  points: Points;
 }
 
-function MainPage({ placesCount, city, offers, points }: MainPageProps): JSX.Element {
+function MainPage({ placesCount, city, offers }: MainPageProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const handleOfferHover = (offerId: string) => {
@@ -37,7 +36,7 @@ function MainPage({ placesCount, city, offers, points }: MainPageProps): JSX.Ele
               </div>
             </section>
             <div className="cities__right-section">
-              <Map city={city} points={points} selectedOffer={selectedOffer} />
+              <Map className={'cities__map map'} city={city} offers={offers} selectedOffer={selectedOffer} />
             </div>
           </div>
         </div>

@@ -9,14 +9,12 @@ type OffersListProps = {
 function OffersList({ offers, setOfferCardHoverId }: OffersListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => {
-        const keyValue = offer.id;
-        return (
-          <OfferCard key={keyValue} offer={offer} setOfferCardHoverId={setOfferCardHoverId} />
-        );
-      })}
+      {offers.map((offer) => (
+        <OfferCard key={offer.id} offer={offer} setOfferCardHoverId={setOfferCardHoverId} />
+      ))}
     </div>
   );
 }
+
 
 export default OffersList;

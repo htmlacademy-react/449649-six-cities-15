@@ -8,9 +8,14 @@ export const OFFERS: Offers = [
     price: 120,
     city: {
       name: 'Amsterdam',
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      lat: 52.35514938496378,
+      lng: 4.673877537499948,
       zoom: 10
+    },
+    location: {
+      lat: 52.3909553943508,
+      lng: 4.85309666406198,
+      zoom: 50
     },
     isFavorite: true,
     isPremium: false,
@@ -38,9 +43,14 @@ export const OFFERS: Offers = [
     price: 200,
     city: {
       name: 'Amsterdam',
-      latitude: 51.5074,
-      longitude: -0.1278,
+      lat: 51.5074,
+      lng: -0.1278,
       zoom: 10
+    },
+    location: {
+      lat: 52.3609553943508,
+      lng: 4.85309666406198,
+      zoom: 20
     },
     isFavorite: true,
     isPremium: false,
@@ -69,9 +79,14 @@ export const OFFERS: Offers = [
     price: 180,
     city: {
       name: 'Amsterdam',
-      latitude: 40.7128,
-      longitude: -74.006,
+      lat: 40.7128,
+      lng: -74.006,
       zoom: 10
+    },
+    location: {
+      lat: 52.3909553943508,
+      lng: 4.929309666406198,
+      zoom: 20
     },
     isFavorite: false,
     isPremium: true,
@@ -101,9 +116,14 @@ export const OFFERS: Offers = [
     price: 350,
     city: {
       name: 'Amsterdam',
-      latitude: -8.409518,
-      longitude: 115.188919,
+      lat: -8.409518,
+      lng: 115.188919,
       zoom: 10
+    },
+    location: {
+      lat: 52.3809553943508,
+      lng: 4.939309666406198,
+      zoom: 20
     },
     isFavorite: true,
     isPremium: true,

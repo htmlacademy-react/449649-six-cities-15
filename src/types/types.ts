@@ -12,14 +12,19 @@ export type Host = {
 
 export type City = {
   name: string;
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
   zoom: number;
 };
 
+export type Location = {
+  lat: number;
+  lng: number;
+  zoom: number;
+}
+
 export type Point = {
   id: string;
-  title: string;
   lat: number;
   lng: number;
 };
@@ -32,6 +37,7 @@ export type Offer = {
   type: string;
   price: number;
   city: City;
+  location: Location;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
