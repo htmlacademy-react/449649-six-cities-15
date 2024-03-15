@@ -1,7 +1,3 @@
-const Setting = {
-  PlacesCount: 312
-};
-
 const USER_INFO = {
   userName: 'Oliver.conner@gmail.com',
   favoriteCount: 3
@@ -50,4 +46,4 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export { Setting, SORTING_OPTIONS, CITIES, USER_INFO, RATING_MAP, AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT };
+export { SORTING_OPTIONS, CITIES, USER_INFO, RATING_MAP, AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT };

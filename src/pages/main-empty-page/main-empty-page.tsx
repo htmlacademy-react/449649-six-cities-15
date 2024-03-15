@@ -1,12 +1,13 @@
 import Header from '../../components/header/header';
 import CitiesTabs from '../../components/cities-tabs/cities-tabs';
+import { CITIES } from '../../mocks/city';
 
 function MainEmptyPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
       <main className="page__main page__main--index page__main--index-empty">
-        <CitiesTabs />
+        <CitiesTabs cities={CITIES}/>
         <div className="cities">
           <div className="cities__places-container cities__places-container--empty container">
             <section className="cities__no-places">
