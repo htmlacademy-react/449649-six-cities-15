@@ -7,14 +7,16 @@ export const OFFERS: Offers = [
     type: 'apartment',
     price: 120,
     city: {
-      name: 'Amsterdam',
-      lat: 52.35514938496378,
-      lng: 4.673877537499948,
-      zoom: 10
+      name: 'Hamburg',
+      location: {
+        lat: 53.550341,
+        lng: 10.000654,
+        zoom: 10
+      }
     },
     location: {
-      lat: 52.3909553943508,
-      lng: 4.85309666406198,
+      lat: 53.538341,
+      lng: 9.976654000000002,
       zoom: 50
     },
     isFavorite: true,
@@ -43,9 +45,11 @@ export const OFFERS: Offers = [
     price: 200,
     city: {
       name: 'Amsterdam',
-      lat: 51.5074,
-      lng: -0.1278,
-      zoom: 10
+      location: {
+        lat: 51.5074,
+        lng: -0.1278,
+        zoom: 10
+      }
     },
     location: {
       lat: 52.3609553943508,
@@ -79,9 +83,11 @@ export const OFFERS: Offers = [
     price: 180,
     city: {
       name: 'Amsterdam',
-      lat: 40.7128,
-      lng: -74.006,
-      zoom: 10
+      location: {
+        lat: 40.7128,
+        lng: -74.006,
+        zoom: 10
+      }
     },
     location: {
       lat: 52.3909553943508,
@@ -116,9 +122,11 @@ export const OFFERS: Offers = [
     price: 350,
     city: {
       name: 'Amsterdam',
-      lat: -8.409518,
-      lng: 115.188919,
-      zoom: 10
+      location: {
+        lat: -8.409518,
+        lng: 115.188919,
+        zoom: 10
+      }
     },
     location: {
       lat: 52.3809553943508,

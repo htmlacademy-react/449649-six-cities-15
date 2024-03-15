@@ -1,13 +1,10 @@
 import Header from '../../components/header/header';
-import { Offers } from '../../types/types';
 import { Link } from 'react-router-dom';
+import { getFavoriteOffers } from '../../store/selectors';
+import { useAppSelector } from '../../hooks/useApp';
 
-type FavoritesPageProps = {
-  offers: Offers;
-}
-
-function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
-  const favoriteCards = offers.filter((offer) => offer.isFavorite);
+function FavoritesPage(): JSX.Element {
+  const favoriteOffers = useAppSelector((state) => getFavoriteOffers(state.offers));
   return (
     <div className="page">
       <Header />
@@ -17,7 +14,7 @@ function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {
-                favoriteCards.map((card) => (
+                favoriteOffers.map((card) => (
 
                   <li className="favorites__locations-items" key={card.id}>
                     <div className="favorites__locations locations locations--current">

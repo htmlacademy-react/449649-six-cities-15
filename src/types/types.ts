@@ -1,3 +1,6 @@
+import { CITIES } from '../const';
+import { store } from '../store';
+
 export type User = {
   name: string;
   avatarUrl: string;
@@ -12,10 +15,12 @@ export type Host = {
 
 export type City = {
   name: string;
-  lat: number;
-  lng: number;
-  zoom: number;
+  location: Location;
 };
+
+export type Cities = City[];
+
+export type CityName = typeof CITIES[number];
 
 export type Location = {
   lat: number;
@@ -61,3 +66,5 @@ export type Review = {
 };
 
 export type Reviews = Review[];
+export type State = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

@@ -1,19 +1,20 @@
 import { useParams } from 'react-router-dom';
-import { City, Offer, Offers, Reviews } from '../../types/types';
+import { Offer, Reviews, State } from '../../types/types';
 import Header from '../../components/header/header';
 import ReviewsList from '../../components/reviewsList/reviewsList';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offer-list/offers-list';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 type OfferPageProps = {
-  city: City;
-  offers: Offers;
   reviews: Reviews;
 };
 
-function OfferPage({ city, offers, reviews }: OfferPageProps): JSX.Element {
+function OfferPage({ reviews }: OfferPageProps): JSX.Element {
   const params = useParams();
+  const offers = useSelector((state: State) => state.offers);
+  const city = useSelector((state: State) => state.city);
   const selectedOffer = offers.filter((offer) => offer.id === params.id)[0];
   const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, images, host, goods } = selectedOffer;
   const { name, isPro, avatarUrl } = host;
@@ -109,7 +110,7 @@ function OfferPage({ city, offers, reviews }: OfferPageProps): JSX.Element {
               <ReviewsList reviews={reviews} />
             </div>
           </div>
-          <Map className='offer__map map' city={city} offers={nearbyOffers} selectedOffer={selectedNearbyOffer}/>
+          <Map className='offer__map map' city={city} offers={nearbyOffers} selectedOffer={selectedNearbyOffer} />
         </section>
         <div className="container">
           <section className="near-places places">
