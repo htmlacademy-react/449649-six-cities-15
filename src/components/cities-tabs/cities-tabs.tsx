@@ -1,16 +1,21 @@
-import { CITIES } from '../../const';
+import { setCity } from '../../store/action';
+import { useAppDispatch } from '../../hooks/useApp';
+import { Cities } from '../../types/types';
 
-function CitiesTabs(): JSX.Element {
+type CitiesTabsProps = { cities: Cities }
+
+function CitiesTabs({ cities }: CitiesTabsProps): JSX.Element {
+  const dispatch = useAppDispatch();
   return (
     <>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {CITIES.map((city) => (
-              <li className="locations__item" key={city}>
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>{city}</span>
+            {cities.map((city) => (
+              <li className="locations__item" key={city.name}>
+                <a className="locations__item-link tabs__item" onClick={() => dispatch(setCity(city))}>
+                  <span>{city.name}</span>
                 </a>
               </li>
             ))}
