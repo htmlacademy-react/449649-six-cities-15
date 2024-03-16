@@ -5,7 +5,7 @@ import ReviewsList from '../../components/reviewsList/reviewsList';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offer-list/offers-list';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/useApp';
 
 type OfferPageProps = {
   reviews: Reviews;
@@ -13,8 +13,8 @@ type OfferPageProps = {
 
 function OfferPage({ reviews }: OfferPageProps): JSX.Element {
   const params = useParams();
-  const offers = useSelector((state: State) => state.offers);
-  const city = useSelector((state: State) => state.city);
+  const offers = useAppSelector((state: State) => state.offers);
+  const city = useAppSelector((state: State) => state.city);
   const selectedOffer = offers.filter((offer) => offer.id === params.id)[0];
   const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, images, host, goods } = selectedOffer;
   const { name, isPro, avatarUrl } = host;
