@@ -1,14 +1,18 @@
 import SortingOption from '../sorting-option/sorting-option';
 import { SORTING_OPTIONS } from '../../const';
 import { useState } from 'react';
+import { useAppDispatch } from '../../hooks/useApp';
+import { setSorting } from '../../store/action';
 
 function SortingForm(): JSX.Element {
+  const dispatch = useAppDispatch();
   const [formState, setFormState] = useState({
     activeOption: SORTING_OPTIONS.POPULAR,
     isOptionsOpen: false
   });
 
   function handleOptionClick(option: string) {
+    dispatch(setSorting(option));
     setFormState({
       ...formState,
       activeOption: option,
