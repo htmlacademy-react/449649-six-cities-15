@@ -8,3 +8,4 @@ export const setSorting = createAction('SET_SORTING', (sortType: string) => ({ p
 export const setError = createAction<string | null>('SET_ERROR');
 export const loadOffers = createAction('LOAD_OFFERS', (offers: Offers) => ({ payload: offers }));
 export const requireAuthorization = createAction('REQUIRE_AUTHORIZATION', (status: AuthorizationStatus) => ({ payload: status }));
+export const setOffersDataLoadingStatus = createAction<boolean>('SET_OFFERS_DATA_LOADING_STATUS');

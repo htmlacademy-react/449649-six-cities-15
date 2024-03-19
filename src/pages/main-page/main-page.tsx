@@ -6,13 +6,13 @@ import { useState } from 'react';
 import SortingForm from '../../components/sorting-form/sorting-form';
 import Map from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useApp';
-import { getOfferById, getOffersByCity } from '../../store/selectors';
-import { CITIES } from '../../mocks/city';
+import { getCitiesFromOffers, getOfferById, getOffersByCity } from '../../store/selectors';
 
 function MainPage(): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
   const city = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => getOffersByCity(city, state.offers));
+  const cities = useAppSelector((state) => getCitiesFromOffers(state.offers));
 
   const handleOfferHover = (offerId: string) => {
     setSelectedOffer(getOfferById(offerId, offers));
@@ -22,7 +22,7 @@ function MainPage(): JSX.Element {
     <div className="page page--gray page--main">
       <Header />
       <main className="page__main page__main--index">
-        <CitiesTabs cities={CITIES} />
+        <CitiesTabs cities={cities} />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
