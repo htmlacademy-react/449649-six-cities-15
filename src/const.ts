@@ -10,6 +10,8 @@ const SORTING_OPTIONS = {
   TOP_RATED_FIRST: 'Top rated first'
 };
 
+const TIMEOUT_SHOW_ERROR = 2000;
+
 const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 
@@ -52,4 +54,4 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
-export { SORTING_OPTIONS, CITIES, USER_INFO, RATING_MAP, AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT };
+export { SORTING_OPTIONS, TIMEOUT_SHOW_ERROR, CITIES, USER_INFO, RATING_MAP, AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT };
