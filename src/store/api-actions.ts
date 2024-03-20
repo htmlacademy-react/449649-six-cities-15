@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, AuthData, Offers, State, UserData } from '../types/types';
 import { loadOffers, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
@@ -23,10 +23,15 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchOffers',
   async (_arg, { dispatch, extra: api }) => {
-    dispatch(setOffersDataLoadingStatus(true));
-    const { data } = await api.get<Offers>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
-    dispatch(loadOffers(data));
+    try {
+      dispatch(setOffersDataLoadingStatus(true));
+      const { data } = await api.get<Offers>(APIRoute.Offers);
+      dispatch(loadOffers(data));
+      dispatch(setOffersDataLoadingStatus(false));
+    } catch (err: unknown) {
+      const errResponse: AxiosError = err as AxiosError;
+      dispatch(setError(errResponse.message));
+    }
   },
 );
 
