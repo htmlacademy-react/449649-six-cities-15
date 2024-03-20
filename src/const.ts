@@ -1,22 +1,26 @@
-const USER_INFO = {
+import { City } from './types/types';
+
+export const USER_INFO = {
   userName: 'Oliver.conner@gmail.com',
   favoriteCount: 3
 };
 
-const SORTING_OPTIONS = {
+export const SORTING_OPTIONS = {
   POPULAR: 'Popular',
   PRICE_LOW_TO_HIGH: 'Price: low to high',
   PRICE_HIGH_TO_LOW: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first'
 };
 
-const URL_MARKER_DEFAULT =
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 
-const URL_MARKER_CURRENT =
+export const URL_MARKER_CURRENT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
-const CITIES: string[] = [
+export const CITIES: string[] = [
   'Paris',
   'Cologne',
   'Brussels',
@@ -25,7 +29,7 @@ const CITIES: string[] = [
   'Dusseldorf',
 ];
 
-const RATING_MAP = {
+export const RATING_MAP = {
   'perfect': '5',
   'good': '4',
   'not bad': '3',
@@ -33,17 +37,30 @@ const RATING_MAP = {
   'terribly': '1'
 };
 
-enum AppRoute {
+export enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
 }
 
-enum AuthorizationStatus {
+export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
 
-export { SORTING_OPTIONS, CITIES, USER_INFO, RATING_MAP, AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT };
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export const DEFAULT_CITY: City = {
+  name: 'Paris',
+  location: {
+    latitude: 48.85661,
+    longitude: 2.351499,
+    zoom: 12
+  }
+};

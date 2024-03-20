@@ -10,8 +10,8 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map |
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.location.lat,
-          lng: city.location.lng
+          lat: city.location.latitude,
+          lng: city.location.longitude
         },
         zoom: city.location.zoom
       });

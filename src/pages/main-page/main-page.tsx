@@ -7,7 +7,6 @@ import SortingForm from '../../components/sorting-form/sorting-form';
 import Map from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useApp';
 import { getOfferById, getOffersByCity } from '../../store/selectors';
-import { CITIES } from '../../mocks/city';
 
 function MainPage(): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
@@ -22,7 +21,7 @@ function MainPage(): JSX.Element {
     <div className="page page--gray page--main">
       <Header />
       <main className="page__main page__main--index">
-        <CitiesTabs cities={CITIES} />
+        <CitiesTabs />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">

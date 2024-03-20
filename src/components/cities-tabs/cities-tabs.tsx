@@ -1,10 +1,9 @@
 import { setCity } from '../../store/action';
-import { useAppDispatch } from '../../hooks/useApp';
-import { Cities } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
+import { getCitiesFromOffers } from '../../store/selectors';
 
-type CitiesTabsProps = { cities: Cities }
-
-function CitiesTabs({ cities }: CitiesTabsProps): JSX.Element {
+function CitiesTabs(): JSX.Element {
+  const cities = useAppSelector((state) => getCitiesFromOffers(state.offers));
   const dispatch = useAppDispatch();
   return (
     <>

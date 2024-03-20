@@ -7,6 +7,17 @@ export type User = {
   isPro: boolean;
 };
 
+export type AuthData = {
+  login: string;
+  password: string;
+};
+
+export type UserData = {
+  id: number;
+  email: string;
+  token: string;
+};
+
 export type Host = {
   name: string;
   avatarUrl: string;
@@ -23,8 +34,8 @@ export type Cities = City[];
 export type CityName = typeof CITIES[number];
 
 export type Location = {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
   zoom: number;
 }
 
