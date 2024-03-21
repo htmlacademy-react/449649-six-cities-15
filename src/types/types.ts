@@ -1,19 +1,15 @@
 import { CITIES } from '../const';
 import { store } from '../store';
 
-export type User = {
-  name: string;
-  avatarUrl: string;
-  isPro: boolean;
-};
-
 export type AuthData = {
   login: string;
   password: string;
 };
 
 export type UserData = {
-  id: number;
+  name: string;
+  avatarUrl: string;
+  isPro: string;
   email: string;
   token: string;
 };
@@ -71,7 +67,7 @@ export type Offers = Offer[];
 export type Review = {
   id: string;
   date: string;
-  user: User;
+  user: UserData;
   comment: string;
   rating: number;
 };

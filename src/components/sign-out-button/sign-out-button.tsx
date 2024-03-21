@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/useApp';
+import { AppRoute } from '../../const';
 
 function SignOutButton(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -11,7 +12,7 @@ function SignOutButton(): JSX.Element {
         evt.preventDefault();
         dispatch(logoutAction());
       }}
-      to='/'
+      to={AppRoute.Login}
     >
       <span className="header__signout">Sign out</span>
     </Link>

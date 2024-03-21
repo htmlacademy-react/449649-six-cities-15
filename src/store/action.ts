@@ -1,8 +1,9 @@
 import { createAction } from '@reduxjs/toolkit';
-import { City, Offers } from '../types/types';
+import { City, Offers, UserData } from '../types/types';
 import { AppRoute, AuthorizationStatus } from '../const';
 
 export const setCity = createAction('SET_CITY', (city: City) => ({ payload: city, }));
+export const setUser = createAction('SET_USER', (user: UserData) => ({ payload: user, }));
 export const setOffers = createAction('SET_OFFERS', (offers: Offers) => ({ payload: offers, }));
 export const setSorting = createAction('SET_SORTING', (sortType: string) => ({ payload: sortType }));
 export const setError = createAction<string | null>('SET_ERROR');

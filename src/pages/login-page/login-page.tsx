@@ -68,7 +68,6 @@ function LoginPage(): JSX.Element {
                 />
               </div>
               <button
-                onClick={() => navigate(AppRoute.Main)}
                 className="login__submit form__submit button"
                 type="submit"
               >
