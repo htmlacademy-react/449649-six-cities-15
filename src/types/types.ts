@@ -6,13 +6,18 @@ export type AuthData = {
   password: string;
 };
 
-export type UserData = {
+export type User = {
   name: string;
   avatarUrl: string;
-  isPro: string;
+  isPro: boolean;
+};
+
+export type UserAuth = {
   email: string;
   token: string;
 };
+
+export type UserData = User & UserAuth;
 
 export type Host = {
   name: string;
@@ -67,7 +72,7 @@ export type Offers = Offer[];
 export type Review = {
   id: string;
   date: string;
-  user: UserData;
+  user: User;
   comment: string;
   rating: number;
 };
