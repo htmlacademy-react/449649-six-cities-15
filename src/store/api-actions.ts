@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, AuthData, Offers, State, UserData } from '../types/types';
-import { loadOffers, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus, setUser } from './action';
+import { AppDispatch, AuthData, Offer, Offers, Reviews, State, UserData } from '../types/types';
+import { loadReviews, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError, setOfferDataLoadingStatus, setOffersDataLoadingStatus, setUser } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { store } from '.';
@@ -34,6 +34,49 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     }
   },
 );
+
+export const fetchOfferAction = createAsyncThunk<
+  void,
+  number | string | undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }>(
+    'data/fetchOffer',
+    async (_arg, { dispatch, extra: api }) => {
+      dispatch(setOfferDataLoadingStatus(true));
+      const id = _arg;
+      try {
+        const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+        dispatch(setOfferDataLoadingStatus(false));
+        dispatch(loadOffer(data));
+      } catch (err: unknown) {
+        const errResponse: AxiosError = err as AxiosError;
+        dispatch(setError(errResponse.message));
+      }
+    },
+  );
+
+export const fetchReviewsAction = createAsyncThunk<
+  void,
+  number | string | undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }>(
+    'data/fetchReviews',
+    async (_arg, { dispatch, extra: api }) => {
+      try {
+        const id = _arg;
+        const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
+        dispatch(loadReviews(data));
+      } catch (err: unknown) {
+        const errResponse: AxiosError = err as AxiosError;
+        dispatch(setError(errResponse.message));
+      }
+    });
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

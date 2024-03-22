@@ -1,7 +1,8 @@
-import { City, Offers } from '../types/types';
+import { City, Offer, Offers } from '../types/types';
 
 export const getOfferById = (offerId: string, offers: Offers) => offers.find((i) => i.id === offerId);
 export const getOffersByCity = (city: City, offers: Offers) => offers.filter((i) => i.city.name === city.name);
+export const getNearbyOffers = (targetOffer: Offer, offers: Offers) => offers.filter((offer) => offer.id !== targetOffer?.id && offer.city.name === targetOffer?.city.name);
 export const getFavoriteOffers = (offers: Offers) => offers.filter((i) => i.isFavorite);
 export const getCitiesFromOffers = (offers: Offers): City[] => {
   const uniqueCities: { [key: string]: City } = {};
