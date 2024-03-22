@@ -13,5 +13,6 @@ export const setUser = createAction('SET_USER', (user: UserData) => ({ payload: 
 export const setOffers = createAction('SET_OFFERS', (offers: Offers) => ({ payload: offers, }));
 export const setSorting = createAction('SET_SORTING', (sortType: string) => ({ payload: sortType }));
 export const setError = createAction<string | null>('SET_ERROR');
+export const setOfferIsNotFound = createAction<boolean>('SET_IS_NOT_OFFER_FOUND');
 export const setOffersDataLoadingStatus = createAction<boolean>('SET_OFFERS_DATA_LOADING_STATUS');
 export const setOfferDataLoadingStatus = createAction<boolean>('SET_OFFER_DATA_LOADING_STATUS');

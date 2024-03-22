@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setCity, setError, setOfferDataLoadingStatus, setOffers, setOffersDataLoadingStatus, setSorting, setUser } from './action';
+import { loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setCity, setError, setOfferDataLoadingStatus, setOfferIsNotFound, setOffers, setOffersDataLoadingStatus, setSorting, setUser } from './action';
 import { AuthorizationStatus, SORTING_OPTIONS, DEFAULT_CITY } from '../const';
 import { offersSorting } from '../utils';
 import { City, Offer, Offers, Reviews, UserData } from '../types/types';
@@ -14,6 +14,7 @@ type InitialState = {
   sortType: string;
   authorizationStatus: AuthorizationStatus;
   user: UserData | null;
+  isOfferNotFound: boolean;
   isOffersDataLoading: boolean;
   isOfferDataLoading: boolean;
   error: string | null;
@@ -28,6 +29,7 @@ const initialState: InitialState = {
   sortType: SORTING_OPTIONS.POPULAR,
   authorizationStatus: AuthorizationStatus.Auth,
   user: null,
+  isOfferNotFound: false,
   isOffersDataLoading: false,
   isOfferDataLoading: false,
   error: null
@@ -62,6 +64,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadNearbyOffers, (state, action) => {
       state.nearbyOffers = action.payload;
+    })
+    .addCase(setOfferIsNotFound, (state, action) => {
+      state.isOfferNotFound = action.payload;
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;

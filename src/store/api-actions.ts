@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, AuthData, Comment, Offer, Offers, Reviews, State, UserData } from '../types/types';
-import { loadReviews, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError, setOfferDataLoadingStatus, setOffersDataLoadingStatus, setUser, loadNearbyOffers } from './action';
+import { loadReviews, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError, setOfferDataLoadingStatus, setOffersDataLoadingStatus, setUser, loadNearbyOffers, setOfferIsNotFound } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { store } from '.';
@@ -46,6 +46,7 @@ export const fetchOfferAction = createAsyncThunk<
     'data/fetchOffer',
     async (_arg, { dispatch, extra: api }) => {
       dispatch(setOfferDataLoadingStatus(true));
+      dispatch(setOfferIsNotFound(false));
       const id = _arg;
       try {
         const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
@@ -53,6 +54,8 @@ export const fetchOfferAction = createAsyncThunk<
         dispatch(loadOffer(data));
       } catch (err: unknown) {
         const errResponse: AxiosError = err as AxiosError;
+        dispatch(setOfferIsNotFound(true));
+        dispatch(setOfferDataLoadingStatus(false));
         dispatch(setError(errResponse.message));
       }
     },

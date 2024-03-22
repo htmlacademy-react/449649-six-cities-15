@@ -27,7 +27,7 @@ function App(): JSX.Element {
         <Route path={AppRoute.Login} element={<LoginPage />} />
         <Route path={AppRoute.Offer} element={<OfferPage />} />
         <Route path={AppRoute.Favorites} element={<PrivateRoute authorizationStatus={authorizationStatus}><FavoritesPage /></PrivateRoute>} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
       </Routes>
     </HistoryRouter>
   );

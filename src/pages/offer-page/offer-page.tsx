@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { Offer, State } from '../../types/types';
 import Header from '../../components/header/header';
 import ReviewsList from '../../components/reviewsList/reviewsList';
@@ -7,12 +7,16 @@ import OffersList from '../../components/offer-list/offers-list';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
 import { fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
+import { AppRoute } from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function OfferPage(): JSX.Element {
   const offerFromState = useAppSelector((state: State) => state.offer);
   const city = useAppSelector((state: State) => state.city);
   const reviews = useAppSelector((state: State) => state.reviews);
   const nearbyOffers = useAppSelector((state: State) => state.nearbyOffers);
+  const isOfferNotFound = useAppSelector((state: State) => state.isOfferNotFound);
+  const isOfferDataLoading = useAppSelector((state: State) => state.isOfferDataLoading);
 
   const dispatch = useAppDispatch();
   const params = useParams();
@@ -34,10 +38,15 @@ function OfferPage(): JSX.Element {
     }
   }, [dispatch, offerId]);
 
+  if (isOfferNotFound) {
+    return <Navigate to={AppRoute.NotFound} />;
+  }
+
   return (
     <div className="page">
       <Header />
       <main className="page__main page__main--offer">
+        {isOfferDataLoading && <LoadingScreen />}
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
@@ -118,7 +127,7 @@ function OfferPage(): JSX.Element {
                   <p className="offer__text">{description}</p>
                 </div>
               </div>
-              <ReviewsList reviews={reviews} offerId={offerId}/>
+              <ReviewsList reviews={reviews} offerId={offerId} />
             </div>
           </div>
           <Map className='offer__map map' city={city} offers={nearbyOffers} selectedOffer={selectedNearbyOffer} />
