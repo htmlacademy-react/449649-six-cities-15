@@ -1,10 +1,5 @@
 import { City } from './types/types';
 
-export const USER_INFO = {
-  userName: 'Oliver.conner@gmail.com',
-  favoriteCount: 3
-};
-
 export const SORTING_OPTIONS = {
   POPULAR: 'Popular',
   PRICE_LOW_TO_HIGH: 'Price: low to high',

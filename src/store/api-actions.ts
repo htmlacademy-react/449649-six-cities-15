@@ -1,9 +1,9 @@
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, AuthData, Offers, State, UserData } from '../types/types';
-import { loadOffers, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
+import { loadOffers, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus, setUser } from './action';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { store } from '.';
 
 export const clearErrorAction = createAsyncThunk(
@@ -58,9 +58,18 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
-    saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    try {
+      const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
+      const { token } = data;
+      saveToken(token);
+      dispatch(setUser(data));
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch (err: unknown) {
+      const errResponse: AxiosError = err as AxiosError;
+      dispatch(setError(errResponse.message));
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
   },
 );
 
@@ -74,5 +83,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(redirectToRoute(AppRoute.Login));
   },
 );

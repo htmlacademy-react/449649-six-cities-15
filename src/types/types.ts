@@ -1,22 +1,23 @@
 import { CITIES } from '../const';
 import { store } from '../store';
 
+export type AuthData = {
+  login: string;
+  password: string;
+};
+
 export type User = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
 };
 
-export type AuthData = {
-  login: string;
-  password: string;
-};
-
-export type UserData = {
-  id: number;
+export type UserAuth = {
   email: string;
   token: string;
 };
+
+export type UserData = User & UserAuth;
 
 export type Host = {
   name: string;
