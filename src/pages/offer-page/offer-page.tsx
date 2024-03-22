@@ -6,21 +6,19 @@ import Map from '../../components/map/map';
 import OffersList from '../../components/offer-list/offers-list';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
-import { fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
-import { getNearbyOffers } from '../../store/selectors';
+import { fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
 
 function OfferPage(): JSX.Element {
-  const offers = useAppSelector((state: State) => state.offers);
   const offerFromState = useAppSelector((state: State) => state.offer);
   const city = useAppSelector((state: State) => state.city);
   const reviews = useAppSelector((state: State) => state.reviews);
+  const nearbyOffers = useAppSelector((state: State) => state.nearbyOffers);
 
   const dispatch = useAppDispatch();
   const params = useParams();
   const offerId = params.id;
 
   const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, images, host, goods } = offerFromState || {};
-  const nearbyOffers = offerFromState ? getNearbyOffers(offerFromState, offers) : [];
   const [selectedNearbyOffer, setselectedNearbyOffer] = useState<Offer | undefined>(undefined);
 
   const handleNearbyOfferHover = (nearbyOfferId: string) => {
@@ -32,6 +30,7 @@ function OfferPage(): JSX.Element {
     if (offerId) {
       dispatch(fetchOfferAction(offerId));
       dispatch(fetchReviewsAction(offerId));
+      dispatch(fetchNearbyOffersAction(offerId));
     }
   }, [dispatch, offerId]);
 

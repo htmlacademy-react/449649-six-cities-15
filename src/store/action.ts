@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { City, Offer, Offers, Reviews, UserData } from '../types/types';
 import { AppRoute, AuthorizationStatus } from '../const';
 
+export const loadNearbyOffers = createAction('LOAD_NEARBY_OFFERS', (places: Offers) => ({ payload: places }));
 export const loadOffers = createAction('LOAD_OFFERS', (offers: Offers) => ({ payload: offers }));
 export const loadOffer = createAction('LOAD_OFFER', (offer: Offer) => ({ payload: offer }));
 export const loadReviews = createAction('ADD_REVIEWS', (reviews: Reviews) => ({ payload: reviews }));
