@@ -1,6 +1,6 @@
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, AuthData, Offer, Offers, Reviews, State, UserData } from '../types/types';
+import { AppDispatch, AuthData, Comment, Offer, Offers, Reviews, State, UserData } from '../types/types';
 import { loadReviews, loadOffer, loadOffers, redirectToRoute, requireAuthorization, setError, setOfferDataLoadingStatus, setOffersDataLoadingStatus, setUser, loadNearbyOffers } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
@@ -102,6 +102,26 @@ export const fetchNearbyOffersAction = createAsyncThunk<
         dispatch(setError(errResponse.message));
       }
     });
+
+export const submitCommentAction = createAsyncThunk<
+  void,
+  Comment,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>(
+  'submitReview',
+  async ({ id, comment, rating }, { dispatch, extra: api }) => {
+    await api.post<Comment>(`${APIRoute.Comments}/${id}`, {
+      comment: comment,
+      rating: rating,
+    });
+
+    dispatch(fetchReviewsAction(id));
+  }
+);
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

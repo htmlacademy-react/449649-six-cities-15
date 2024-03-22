@@ -5,10 +5,11 @@ import CommentForm from '../comment-form/comment-form';
 import ReviewItem from '../review/review';
 
 type ReviewsProps = {
+  offerId?: string;
   reviews: Reviews;
 };
 
-function ReviewsList({ reviews }: ReviewsProps): JSX.Element {
+function ReviewsList({ offerId, reviews }: ReviewsProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   return (
     <section className="offer__reviews reviews">
@@ -18,7 +19,7 @@ function ReviewsList({ reviews }: ReviewsProps): JSX.Element {
       <ul className="reviews__list">
         {reviews.map((review) => (<ReviewItem key={review.id} review={review} />))}
       </ul>
-      {authorizationStatus === AuthorizationStatus.Auth && (<CommentForm />)}
+      {authorizationStatus === AuthorizationStatus.Auth && (<CommentForm offerId={offerId}/>)}
     </section>
   );
 }

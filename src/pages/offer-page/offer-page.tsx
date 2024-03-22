@@ -118,7 +118,7 @@ function OfferPage(): JSX.Element {
                   <p className="offer__text">{description}</p>
                 </div>
               </div>
-              <ReviewsList reviews={reviews} />
+              <ReviewsList reviews={reviews} offerId={offerId}/>
             </div>
           </div>
           <Map className='offer__map map' city={city} offers={nearbyOffers} selectedOffer={selectedNearbyOffer} />

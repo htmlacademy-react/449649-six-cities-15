@@ -1,11 +1,25 @@
 import { useState, ChangeEvent, Fragment, FormEvent } from 'react';
 import { RATING_MAP } from '../../const';
+import { useAppDispatch } from '../../hooks/useApp';
+import { submitCommentAction } from '../../store/api-actions';
 
-function CommentForm(): JSX.Element {
+type CommentProps = {
+  offerId?: string;
+};
+
+function CommentForm({ offerId }: CommentProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     rating: '0',
     comment: '',
   });
+
+  const resetForm = () => {
+    setFormData({
+      rating: '0',
+      comment: '',
+    });
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -15,11 +29,25 @@ function CommentForm(): JSX.Element {
     }));
   };
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (offerId) {
+      dispatch(
+        submitCommentAction({
+          id: offerId,
+          comment: formData.comment,
+          rating: Number(formData.rating),
+        })
+      );
+
+      resetForm();
+    }
+  };
+
   return (
     <form className="reviews__form form" action="#" method="post"
-      onSubmit={(evt: FormEvent<HTMLFormElement>) => {
-        evt.preventDefault();
-      }}
+      onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
@@ -67,7 +95,7 @@ function CommentForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled = {formData.comment.length < 50 || formData.rating === '0'}
+          disabled={formData.comment.length < 50 || formData.rating === '0'}
         >
           Submit
         </button>
