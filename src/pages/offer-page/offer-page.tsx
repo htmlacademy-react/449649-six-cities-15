@@ -1,41 +1,58 @@
-import { useParams } from 'react-router-dom';
-import { Offer, Reviews, State } from '../../types/types';
+import { Navigate, useParams } from 'react-router-dom';
+import { Offer, State } from '../../types/types';
 import Header from '../../components/header/header';
 import ReviewsList from '../../components/reviewsList/reviewsList';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offer-list/offers-list';
-import { useState } from 'react';
-import { useAppSelector } from '../../hooks/useApp';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
+import { fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
+import { AppRoute } from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
+import Avatar from '../../components/avatar/avatar';
 
-type OfferPageProps = {
-  reviews: Reviews;
-};
-
-function OfferPage({ reviews }: OfferPageProps): JSX.Element {
-  const params = useParams();
-  const offers = useAppSelector((state: State) => state.offers);
+function OfferPage(): JSX.Element {
+  const offerFromState = useAppSelector((state: State) => state.offer);
   const city = useAppSelector((state: State) => state.city);
-  const selectedOffer = offers.filter((offer) => offer.id === params.id)[0];
-  const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, images, host, goods } = selectedOffer;
-  const { name, isPro, avatarUrl } = host;
-  const nearbyOffers = offers.filter((offer) => offer.id !== selectedOffer.id);
+  const reviews = useAppSelector((state: State) => state.reviews);
+  const nearbyOffers = useAppSelector((state: State) => state.nearbyOffers);
+  const isOfferNotFound = useAppSelector((state: State) => state.isOfferNotFound);
+  const isOfferDataLoading = useAppSelector((state: State) => state.isOfferDataLoading);
 
+  const dispatch = useAppDispatch();
+  const params = useParams();
+  const offerId = params.id;
+
+  const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, images, host, goods } = offerFromState || {};
   const [selectedNearbyOffer, setselectedNearbyOffer] = useState<Offer | undefined>(undefined);
 
-  const handleNearbyOfferHover = (offerId: string) => {
-    const nearbyOffer = nearbyOffers.find((offer) => offer.id === offerId);
+  const handleNearbyOfferHover = (nearbyOfferId: string) => {
+    const nearbyOffer = nearbyOffers.find((offer) => offer.id === nearbyOfferId);
     setselectedNearbyOffer(nearbyOffer);
   };
+
+  useEffect(() => {
+    if (offerId) {
+      dispatch(fetchOfferAction(offerId));
+      dispatch(fetchReviewsAction(offerId));
+      dispatch(fetchNearbyOffersAction(offerId));
+    }
+  }, [dispatch, offerId]);
+
+  if (isOfferNotFound) {
+    return <Navigate to={AppRoute.NotFound} />;
+  }
 
   return (
     <div className="page">
       <Header />
       <main className="page__main page__main--offer">
+        {isOfferDataLoading && <LoadingScreen />}
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               <div className="offer__image-wrapper">
-                {images.map((url, id) => {
+                {images && images.map((url, id) => {
                   const keyValue = `${id}-${url}`;
                   return (
                     <img key={keyValue} className="offer__image" src={url} alt="Photo studio" />
@@ -65,7 +82,7 @@ function OfferPage({ reviews }: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${rating * 20}%` }} />
+                  <span style={{ width: `${rating && rating * 20}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{rating}</span>
@@ -79,35 +96,33 @@ function OfferPage({ reviews }: OfferPageProps): JSX.Element {
                 <b className="offer__price-value">€{price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
-              <div className="offer__inside">
-                <h2 className="offer__inside-title">What&apos;s inside</h2>
-                <ul className="offer__inside-list">
-                  {goods.map((good) => {
-                    const keyValue = good;
-                    return (<li key={keyValue} className="offer__inside-item">{good}</li>);
-                  })}
-                </ul>
-              </div>
+              {goods && (
+                <div className="offer__inside">
+                  <h2 className="offer__inside-title">Whats inside</h2>
+                  <ul className="offer__inside-list">
+                    {goods.map((good) => {
+                      const keyValue = good;
+                      return (<li key={keyValue} className="offer__inside-item">{good}</li>);
+                    })}
+                  </ul>
+                </div>
+              )}
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img
-                      className="offer__avatar user__avatar"
-                      src={avatarUrl}
-                      width={74}
-                      height={74}
-                      alt="Host avatar"
-                    />
-                  </div>
-                  <span className="offer__user-name">{name}</span>
-                  <span className="offer__user-status">{isPro ? 'Pro' : ''}</span>
+                  {host?.avatarUrl && (
+                    <div className={`offer__avatar-wrapper ${host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
+                      <Avatar imageUrl={host.avatarUrl} width={74} height={74} alt="Host avatar" className='offer__avatar user__avatar'/>
+                    </div>
+                  )}
+                  {host?.name && (<span className="offer__user-name">{host.name}</span>)}
+                  {host?.isPro && (<span className="offer__user-status">Pro</span>)}
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">{description}</p>
                 </div>
               </div>
-              <ReviewsList reviews={reviews} />
+              <ReviewsList reviews={reviews} offerId={offerId} />
             </div>
           </div>
           <Map className='offer__map map' city={city} offers={nearbyOffers} selectedOffer={selectedNearbyOffer} />

@@ -69,10 +69,13 @@ export type Offer = {
 
 export type Offers = Offer[];
 
-export type Review = {
-  id: string;
+export type Review = Comment & {
   date: string;
   user: User;
+};
+
+export type Comment = {
+  id: string;
   comment: string;
   rating: number;
 };

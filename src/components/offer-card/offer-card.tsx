@@ -23,7 +23,7 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
     <article className="cities__card place-card" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`offer/${id}`}>
+        <Link key={offer.id} to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
             src={previewImage}
