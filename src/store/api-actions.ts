@@ -50,13 +50,13 @@ export const fetchOfferAction = createAsyncThunk<
       const id = _arg;
       try {
         const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-        dispatch(setOfferDataLoadingStatus(false));
         dispatch(loadOffer(data));
       } catch (err: unknown) {
         const errResponse: AxiosError = err as AxiosError;
         dispatch(setOfferIsNotFound(true));
-        dispatch(setOfferDataLoadingStatus(false));
         dispatch(setError(errResponse.message));
+      } finally {
+        dispatch(setOfferDataLoadingStatus(false));
       }
     },
   );

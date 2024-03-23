@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
 import { fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
 import { AppRoute } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
+import Avatar from '../../components/avatar/avatar';
 
 function OfferPage(): JSX.Element {
   const offerFromState = useAppSelector((state: State) => state.offer);
@@ -111,13 +112,7 @@ function OfferPage(): JSX.Element {
                 <div className="offer__host-user user">
                   {host?.avatarUrl && (
                     <div className={`offer__avatar-wrapper ${host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
-                      <img
-                        className="offer__avatar user__avatar"
-                        src={host.avatarUrl}
-                        width={74}
-                        height={74}
-                        alt="Host avatar"
-                      />
+                      <Avatar imageUrl={host.avatarUrl} width={74} height={74} alt="Host avatar" className='offer__avatar user__avatar'/>
                     </div>
                   )}
                   {host?.name && (<span className="offer__user-name">{host.name}</span>)}
