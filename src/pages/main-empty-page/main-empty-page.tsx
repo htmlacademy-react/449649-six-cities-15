@@ -1,9 +1,10 @@
 import Header from '../../components/header/header';
 import CitiesTabs from '../../components/cities-tabs/cities-tabs';
 import { useAppSelector } from '../../hooks/useApp';
+import { getCity } from '../../store/offers-data/selectors';
 
 function MainEmptyPage(): JSX.Element {
-  const city = useAppSelector((state) => state.city);
+  const city = useAppSelector(getCity);
 
   return (
     <div className="page page--gray page--main">
@@ -16,7 +17,7 @@ function MainEmptyPage(): JSX.Element {
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">No places to stay available</b>
                 <p className="cities__status-description">
-                  We could not find any property available at the moment in {city.name}
+                  We could not find any property available at the moment in {city?.name}
                 </p>
               </div>
             </section>

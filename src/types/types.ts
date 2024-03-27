@@ -1,4 +1,4 @@
-import { CITIES } from '../const';
+import { AuthorizationStatus, NameSpace } from '../const';
 import { store } from '../store';
 
 export type AuthData = {
@@ -31,8 +31,6 @@ export type City = {
 };
 
 export type Cities = City[];
-
-export type CityName = typeof CITIES[number];
 
 export type Location = {
   latitude: number;
@@ -69,17 +67,63 @@ export type Offer = {
 
 export type Offers = Offer[];
 
-export type Review = Comment & {
-  date: string;
-  user: User;
-};
-
 export type Comment = {
   id: string;
   comment: string;
   rating: number;
 };
 
+export type Review = Comment & {
+  date: string;
+  user: User;
+};
 export type Reviews = Review[];
-export type State = ReturnType<typeof store.getState>;
+
+export type OffersData = {
+  allOffers: Offers;
+  offersByCity: Offers;
+  allCities: Cities;
+  citiesNames: string[];
+  cityName: string;
+  city: City;
+  sortType: string;
+  isOffersLoading: boolean;
+  isOffersNotFound: boolean;
+};
+
+export type OfferData = {
+  offer: Offer | null;
+  offerIsLoading: boolean;
+  offerIsNotFound: boolean;
+};
+
+export type UserProcess = {
+  authorizationStatus: AuthorizationStatus;
+  user: UserData | null;
+};
+
+export type ReviewsData = {
+  reviews: Reviews;
+  reviewsIsLoading: boolean;
+  reviewsIsNotFound: boolean;
+};
+
+export type NearbyOffersData = {
+  nearbyOffers: Offers;
+  isNearbyOffersLoading: boolean;
+  IsNearbyOffersNotFound: boolean;
+};
+
+export type ErrorData = {
+  errorMessage: string | null;
+};
+
+export type State = {
+  [NameSpace.Offers]: OffersData;
+  [NameSpace.Offer]: OfferData;
+  [NameSpace.User]: UserProcess;
+  [NameSpace.Reviews]: ReviewsData;
+  [NameSpace.NearbyOffers]: NearbyOffersData;
+  [NameSpace.ErrorMessage]: ErrorData;
+};
 export type AppDispatch = typeof store.dispatch;

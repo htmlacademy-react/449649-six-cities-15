@@ -15,15 +15,6 @@ export const URL_MARKER_DEFAULT =
 export const URL_MARKER_CURRENT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
-export const CITIES: string[] = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-];
-
 export const RATING_MAP = {
   'perfect': '5',
   'good': '4',
@@ -51,6 +42,7 @@ export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
+  Nearby = '/nearby',
 }
 
 export const DEFAULT_CITY: City = {
@@ -61,3 +53,13 @@ export const DEFAULT_CITY: City = {
     zoom: 12
   }
 };
+
+export enum NameSpace {
+  User = 'USER',
+  Data = 'DATA',
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  Reviews = 'REVIEWS',
+  NearbyOffers = 'OFFERSNEARBY',
+  ErrorMessage = 'ERRORMESSAGE'
+}

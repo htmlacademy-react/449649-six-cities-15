@@ -1,8 +1,10 @@
+import { TIMEOUT_SHOW_ERROR } from '../const';
 import { store } from '../store';
-import { setError } from '../store/action';
-import { clearErrorAction } from '../store/api-actions';
+import { clearError, setError } from '../store/error-data/error-data';
 
 export const processErrorHandle = (message: string): void => {
-  store.dispatch(setError(message));
-  store.dispatch(clearErrorAction());
+  store.dispatch(setError({ error: message }));
+  setTimeout(() => {
+    store.dispatch(clearError());
+  }, TIMEOUT_SHOW_ERROR);
 };

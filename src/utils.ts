@@ -1,4 +1,4 @@
-import { Offers } from './types/types';
+import { Cities, City, Offers } from './types/types';
 import { SORTING_OPTIONS } from './const';
 
 export function offersSorting(type: string, list: Offers) {
@@ -12,4 +12,26 @@ export function offersSorting(type: string, list: Offers) {
     default:
       return list;
   }
+}
+
+export function getCitiesNames(offers: Offers) {
+  const cityNamesSet = new Set<string>();
+  offers.forEach((offer) => {
+    cityNamesSet.add(offer.city.name);
+  });
+
+  return cityNamesSet;
+}
+
+export function getCitiesFromOffers(offers: Offers): Cities {
+  const citiesMap: Map<string, City> = new Map();
+  offers.forEach((offer) => {
+    citiesMap.set(offer.city.name, offer.city);
+  });
+
+  return Array.from(citiesMap.values());
+}
+
+export function getOffersByCity(offers: Offers, city: City): Offers {
+  return offers.filter((offer) => offer.city.name === city.name);
 }
