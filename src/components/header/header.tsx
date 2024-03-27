@@ -27,7 +27,7 @@ function Header(): JSX.Element {
                       style={{ backgroundImage: user?.avatarUrl }}
                     >
                     </div>
-                    <span className="header__user-name user__name">{user?.email}</span>
+                    <span className="header__user-name user__name">{user?.name}</span>
                     <span className="header__favorite-count">3</span>
                   </NavLink>
                 </li>
