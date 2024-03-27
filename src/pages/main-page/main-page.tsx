@@ -7,7 +7,7 @@ import SortingForm from '../../components/sorting-form/sorting-form';
 import Map from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useApp';
 import { getCity, getCityName, getOffersByCity } from '../../store/offers-data/selectors';
-import { getOfferById } from '../../store/offer-data/selectors';
+import { getOfferById } from '../../utils';
 
 function MainPage(): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
