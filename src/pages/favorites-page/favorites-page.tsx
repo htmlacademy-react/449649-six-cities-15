@@ -1,10 +1,10 @@
 import Header from '../../components/header/header';
 import { Link } from 'react-router-dom';
-import { getFavoriteOffers } from '../../store/selectors';
 import { useAppSelector } from '../../hooks/useApp';
+import { getOffers } from '../../store/offers-data/selectors';
 
 function FavoritesPage(): JSX.Element {
-  const favoriteOffers = useAppSelector((state) => getFavoriteOffers(state.offers));
+  const favoriteOffers = useAppSelector(getOffers);
   return (
     <div className="page">
       <Header />

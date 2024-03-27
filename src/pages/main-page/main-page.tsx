@@ -6,15 +6,17 @@ import { useState } from 'react';
 import SortingForm from '../../components/sorting-form/sorting-form';
 import Map from '../../components/map/map';
 import { useAppSelector } from '../../hooks/useApp';
-import { getOfferById, getOffersByCity } from '../../store/selectors';
+import { getCity, getCityName, getOffersByCity } from '../../store/offers-data/selectors';
+import { getOfferById } from '../../utils';
 
 function MainPage(): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-  const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => getOffersByCity(city, state.offers));
+  const offersByCity = useAppSelector(getOffersByCity);
+  const cityName = useAppSelector(getCityName);
+  const city = useAppSelector(getCity);
 
   const handleOfferHover = (offerId: string) => {
-    setSelectedOffer(getOfferById(offerId, offers));
+    setSelectedOffer(getOfferById(offerId, offersByCity));
   };
 
   return (
@@ -26,14 +28,14 @@ function MainPage(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {city.name}</b>
+              <b className="places__found">{offersByCity.length} places to stay in {cityName}</b>
               <SortingForm />
               <div className="cities__places-list places__list tabs__content">
-                <OffersList offers={offers} setOfferCardHoverId={handleOfferHover} />
+                <OffersList offers={offersByCity} setOfferCardHoverId={handleOfferHover} />
               </div>
             </section>
             <div className="cities__right-section">
-              <Map className={'cities__map map'} city={city} offers={offers} selectedOffer={selectedOffer} />
+              <Map className={'cities__map map'} city={city} offers={offersByCity} selectedOffer={selectedOffer} />
             </div>
           </div>
         </div>

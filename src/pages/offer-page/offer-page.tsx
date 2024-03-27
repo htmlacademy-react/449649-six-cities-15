@@ -1,5 +1,5 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { Offer, State } from '../../types/types';
+import { Offer } from '../../types/types';
 import Header from '../../components/header/header';
 import ReviewsList from '../../components/reviewsList/reviewsList';
 import Map from '../../components/map/map';
@@ -10,14 +10,18 @@ import { fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction } from '.
 import { AppRoute } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Avatar from '../../components/avatar/avatar';
+import { getOffer, getOfferIsLoading, getOfferIsNotFound } from '../../store/offer-data/selectors';
+import { getCity } from '../../store/offers-data/selectors';
+import { getReviews } from '../../store/review-data/selectors';
+import { getNearbyOffers } from '../../store/nearby-offers-data/selectors';
 
 function OfferPage(): JSX.Element {
-  const offerFromState = useAppSelector((state: State) => state.offer);
-  const city = useAppSelector((state: State) => state.city);
-  const reviews = useAppSelector((state: State) => state.reviews);
-  const nearbyOffers = useAppSelector((state: State) => state.nearbyOffers);
-  const isOfferNotFound = useAppSelector((state: State) => state.isOfferNotFound);
-  const isOfferDataLoading = useAppSelector((state: State) => state.isOfferDataLoading);
+  const offerFromState = useAppSelector(getOffer);
+  const city = useAppSelector(getCity);
+  const reviews = useAppSelector(getReviews);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
+  const isOfferNotFound = useAppSelector(getOfferIsNotFound);
+  const isOfferDataLoading = useAppSelector(getOfferIsLoading);
 
   const dispatch = useAppDispatch();
   const params = useParams();
@@ -112,7 +116,7 @@ function OfferPage(): JSX.Element {
                 <div className="offer__host-user user">
                   {host?.avatarUrl && (
                     <div className={`offer__avatar-wrapper ${host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
-                      <Avatar imageUrl={host.avatarUrl} width={74} height={74} alt="Host avatar" className='offer__avatar user__avatar'/>
+                      <Avatar imageUrl={host.avatarUrl} width={74} height={74} alt="Host avatar" className='offer__avatar user__avatar' />
                     </div>
                   )}
                   {host?.name && (<span className="offer__user-name">{host.name}</span>)}

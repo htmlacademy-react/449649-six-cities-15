@@ -2,7 +2,7 @@ import SortingOption from '../sorting-option/sorting-option';
 import { SORTING_OPTIONS } from '../../const';
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks/useApp';
-import { setSorting } from '../../store/action';
+import { setSortType } from '../../store/offers-data/offers-data';
 
 function SortingForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ function SortingForm(): JSX.Element {
   });
 
   function handleOptionClick(option: string) {
-    dispatch(setSorting(option));
+    dispatch(setSortType(option));
     setFormState({
       ...formState,
       activeOption: option,
