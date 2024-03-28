@@ -1,4 +1,4 @@
-import { Cities, City, Offers } from './types/types';
+import { Cities, City, Offer, Offers } from './types/types';
 import { SORTING_OPTIONS } from './const';
 
 export function offersSorting(type: string, list: Offers) {
@@ -13,6 +13,8 @@ export function offersSorting(type: string, list: Offers) {
       return list;
   }
 }
+
+export const getOfferById = (offerId: string, offers: Offers): Offer | undefined => offers.find((offer) => offer.id === offerId);
 
 export function getCitiesNames(offers: Offers) {
   const cityNamesSet = new Set<string>();
