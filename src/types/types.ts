@@ -79,6 +79,11 @@ export type Review = Comment & {
 };
 export type Reviews = Review[];
 
+export type FavoriteStatusData = {
+  offerId: string;
+  status: number;
+};
+
 export type OffersData = {
   allOffers: Offers;
   offersByCity: Offers;
@@ -114,6 +119,12 @@ export type NearbyOffersData = {
   IsNearbyOffersNotFound: boolean;
 };
 
+export type FavoriteOffersData = {
+  favoriteOffers: Offers;
+  isFavoriteOffersLoading: boolean;
+  isFavoriteOffersNotFound: boolean;
+};
+
 export type ErrorData = {
   errorMessage: string | null;
 };
@@ -124,6 +135,7 @@ export type State = {
   [NameSpace.User]: UserProcess;
   [NameSpace.Reviews]: ReviewsData;
   [NameSpace.NearbyOffers]: NearbyOffersData;
+  [NameSpace.FavoriteOffers]: FavoriteOffersData;
   [NameSpace.ErrorMessage]: ErrorData;
 };
 export type AppDispatch = typeof store.dispatch;
