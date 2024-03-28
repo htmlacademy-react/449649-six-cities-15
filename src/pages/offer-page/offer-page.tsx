@@ -14,6 +14,7 @@ import { getOffer, getOfferIsLoading, getOfferIsNotFound } from '../../store/off
 import { getCity } from '../../store/offers-data/selectors';
 import { getReviews } from '../../store/review-data/selectors';
 import { getNearbyOffers } from '../../store/nearby-offers-data/selectors';
+import { useFavorites } from '../../hooks/useFavorites';
 
 function OfferPage(): JSX.Element {
   const offerFromState = useAppSelector(getOffer);
@@ -27,13 +28,16 @@ function OfferPage(): JSX.Element {
   const params = useParams();
   const offerId = params.id;
 
-  const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, images, host, goods } = offerFromState || {};
+  const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, isFavorite, images, host, goods } = offerFromState || {};
+  const favoriteStatus = isFavorite ? 0 : 1;
   const [selectedNearbyOffer, setselectedNearbyOffer] = useState<Offer | undefined>(undefined);
 
   const handleNearbyOfferHover = (nearbyOfferId: string) => {
     const nearbyOffer = nearbyOffers.find((offer) => offer.id === nearbyOfferId);
     setselectedNearbyOffer(nearbyOffer);
   };
+
+  const handleBookmarkClick = useFavorites(offerId!, favoriteStatus);
 
   useEffect(() => {
     if (offerId) {
@@ -62,11 +66,6 @@ function OfferPage(): JSX.Element {
                     <img key={keyValue} className="offer__image" src={url} alt="Photo studio" />
                   );
                 })}
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
               </div>
             </div>
           </div>
@@ -77,7 +76,11 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button
+                  onClick={() => handleBookmarkClick()}
+                  className={`offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : ''}`}
+                  type="button"
+                >
                   <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
