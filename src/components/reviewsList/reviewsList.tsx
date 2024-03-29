@@ -12,20 +12,10 @@ type ReviewsProps = {
 
 function ReviewsList({ offerId, reviews }: ReviewsProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  if (!reviews) {
-    return (
-      <section className="offer__reviews reviews">
-        <h2 className="reviews__title">
-          Reviews · <span className="reviews__amount">0</span>
-        </h2>
-      </section>
-    );
-  }
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">
-        Reviews · <span className="reviews__amount">{reviews.length}</span>
+        Reviews · <span className="reviews__amount">{reviews ? reviews.length : 0}</span>
       </h2>
       <ul className="reviews__list">
         {reviews.map((review) => (<ReviewItem key={review.id} review={review} />))}
