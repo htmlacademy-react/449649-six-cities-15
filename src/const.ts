@@ -65,11 +65,23 @@ export enum UpdateSource {
 export const OfferCardParams = {
   mainPage: {
     width: 260,
-    height: 200
+    height: 200,
+    updateSource: UpdateSource.MainPage
   },
   favoritePage: {
     width: 150,
-    height: 110
+    height: 110,
+    updateSource: UpdateSource.FavoritesPage
+  },
+  offerPage: {
+    width: 260,
+    height: 200,
+    updateSource: UpdateSource.OfferPage
+  },
+  nearbyOffersPage: {
+    width: 260,
+    height: 200,
+    updateSource: UpdateSource.NearbyOffersPage
   }
 };
 

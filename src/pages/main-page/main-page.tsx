@@ -33,7 +33,7 @@ function MainPage(): JSX.Element {
                 <b className="places__found">{offersByCity.length} places to stay in {cityName}</b>
                 <SortingForm />
                 <div className="cities__places-list places__list tabs__content">
-                  <OffersList offers={offersByCity} setOfferCardHoverId={handleOfferHover} />
+                  <OffersList offers={offersByCity} page='mainPage' setOfferCardHoverId={handleOfferHover} />
                 </div>
               </section>
               <div className="cities__right-section">

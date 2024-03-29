@@ -140,7 +140,7 @@ function OfferPage(): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              <OffersList offers={nearbyOffers} setOfferCardHoverId={handleNearbyOfferHover} />
+              <OffersList offers={nearbyOffers} page='nearbyOffersPage' setOfferCardHoverId={handleNearbyOfferHover} />
             </div>
           </section>
         </div>

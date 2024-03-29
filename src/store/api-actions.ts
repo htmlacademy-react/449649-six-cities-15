@@ -105,21 +105,24 @@ export const setFavoriteAction = createAsyncThunk<
 
   switch (params.sourceUpdate) {
     case UpdateSource.MainPage:
-      dispatch(setFavoriteOffer(data.isFavorite));
-      dispatch(fetchFavoritesAction());
       dispatch(setFavoriteOffers(data));
+      dispatch(fetchFavoritesAction());
       break;
     case UpdateSource.OfferPage:
       dispatch(setFavoriteOffer(data.isFavorite));
-      dispatch(fetchFavoritesAction());
       dispatch(setFavoriteOffers(data));
+      dispatch(setFavoriteFromNearby(data));
+      dispatch(fetchFavoritesAction());
       break;
     case UpdateSource.FavoritesPage:
-      dispatch(fetchFavoritesAction());
       dispatch(setFavoriteOffers(data));
+      dispatch(setFavoriteOffer(data.isFavorite));
+      dispatch(setFavoriteFromNearby(data));
+      dispatch(fetchFavoritesAction());
       break;
     case UpdateSource.NearbyOffersPage:
       dispatch(setFavoriteFromNearby(data));
+      dispatch(fetchFavoritesAction());
       break;
   }
 

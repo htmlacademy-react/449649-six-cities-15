@@ -1,7 +1,7 @@
 import { Offer } from '../../types/types';
 import { Link } from 'react-router-dom';
 import { useFavorites } from '../../hooks/useFavorites';
-import { OfferCardParams, UpdateSource } from '../../const';
+import { OfferCardParams } from '../../const';
 
 type OfferCardProps = {
   offer: Offer;
@@ -14,6 +14,8 @@ function OfferCard({ offer, page, setOfferCardHoverId }: OfferCardProps): JSX.El
   const favoriteStatus = isFavorite ? 0 : 1;
   const width = OfferCardParams[page].width;
   const height = OfferCardParams[page].height;
+  const updateSource = OfferCardParams[page].updateSource;
+  const handleBookmarkClick = useFavorites(id, favoriteStatus, updateSource);
 
   const handleMouseOver = () => {
     if (setOfferCardHoverId) {
@@ -26,8 +28,6 @@ function OfferCard({ offer, page, setOfferCardHoverId }: OfferCardProps): JSX.El
       setOfferCardHoverId(null);
     }
   };
-
-  const handleBookmarkClick = useFavorites(id, favoriteStatus, UpdateSource.OfferPage);
 
   return (
     <article className="cities__card place-card" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
@@ -51,7 +51,7 @@ function OfferCard({ offer, page, setOfferCardHoverId }: OfferCardProps): JSX.El
           </div>
           <button
             onClick={() => handleBookmarkClick()}
-            className={`place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`}
+            className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">

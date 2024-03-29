@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks/useApp';
-import { setCity, setCityName, setOffers } from '../../store/offers-data/offers-data';
+import { setCity, setCityName, setOffersByCity } from '../../store/offers-data/offers-data';
 import { City, Offers } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 import { getCityByName } from '../../utils';
@@ -18,8 +18,8 @@ function FavoriteOffersList({ city, offersByCity }: FavoritesCardListProps) {
 
   function handleCityButtonClick(chosenCity: City) {
     dispatch(setCityName(chosenCity.name));
-    dispatch(setOffers());
     dispatch(setCity(chosenCity));
+    dispatch(setOffersByCity());
   }
 
   return (
