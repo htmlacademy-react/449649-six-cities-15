@@ -2,9 +2,11 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, AuthData, Comment, FavoriteOffersData, FavoriteStatusData, Offer, Offers, Review, Reviews, State, UserAuth } from '../types/types';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute, AppRoute } from '../const';
+import { APIRoute, AppRoute, UpdateSource } from '../const';
 import { redirectToRoute } from './action';
 import { setFavoriteOffer } from './offer-data/offer-data';
+import { setFavoriteOffers } from './offers-data/offers-data';
+import { setFavoriteFromNearby } from './nearby-offers-data/nearby-offers-data';
 
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -85,7 +87,7 @@ export const fetchFavoritesAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('fetchFavorites', async (_, { extra: api }) => {
+>('fetchFavorites', async (_arg, { extra: api }) => {
   const { data } = await api.get<Offers>(APIRoute.Favorite);
   return data;
 });
@@ -100,8 +102,27 @@ export const setFavoriteAction = createAsyncThunk<
   }
 >('setFavorites', async (params: FavoriteStatusData, { dispatch, extra: api }) => {
   const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${params.offerId}/${params.status}`);
-  dispatch(fetchFavoritesAction());
-  dispatch(setFavoriteOffer(data.isFavorite));
+
+  switch (params.sourceUpdate) {
+    case UpdateSource.MainPage:
+      dispatch(setFavoriteOffer(data.isFavorite));
+      dispatch(fetchFavoritesAction());
+      dispatch(setFavoriteOffers(data));
+      break;
+    case UpdateSource.OfferPage:
+      dispatch(setFavoriteOffer(data.isFavorite));
+      dispatch(fetchFavoritesAction());
+      dispatch(setFavoriteOffers(data));
+      break;
+    case UpdateSource.FavoritesPage:
+      dispatch(fetchFavoritesAction());
+      dispatch(setFavoriteOffers(data));
+      break;
+    case UpdateSource.NearbyOffersPage:
+      dispatch(setFavoriteFromNearby(data));
+      break;
+  }
+
   return data;
 }
 );

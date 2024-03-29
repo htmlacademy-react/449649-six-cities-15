@@ -55,6 +55,24 @@ export const DEFAULT_CITY: City = {
   }
 };
 
+export enum UpdateSource {
+  MainPage = 'UpdateFromMainPage',
+  OfferPage = 'UpdateFromOfferPage',
+  FavoritesPage = 'UpdateFromFavoritesPage',
+  NearbyOffersPage = 'UpdateFromNearbyOffersPage',
+}
+
+export const OfferCardParams = {
+  mainPage: {
+    width: 260,
+    height: 200
+  },
+  favoritePage: {
+    width: 150,
+    height: 110
+  }
+};
+
 export enum NameSpace {
   User = 'USER',
   Data = 'DATA',

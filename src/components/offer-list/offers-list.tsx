@@ -10,7 +10,7 @@ function OffersList({ offers, setOfferCardHoverId }: OffersListProps): JSX.Eleme
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
-        <OfferCard key={offer.id} offer={offer} setOfferCardHoverId={setOfferCardHoverId} />
+        <OfferCard key={offer.id} page={'mainPage'} offer={offer} setOfferCardHoverId={setOfferCardHoverId} />
       ))}
     </div>
   );

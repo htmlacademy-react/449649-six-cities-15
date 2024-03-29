@@ -82,6 +82,7 @@ export type Reviews = Review[];
 export type FavoriteStatusData = {
   offerId: string;
   status: number;
+  sourceUpdate: string;
 };
 
 export type OffersData = {

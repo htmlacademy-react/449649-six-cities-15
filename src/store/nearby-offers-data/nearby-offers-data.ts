@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { NearbyOffersData } from '../../types/types';
+import { NearbyOffersData, Offer } from '../../types/types';
 import { fetchNearbyOffersAction } from '../api-actions';
 
 const initialState: NearbyOffersData = {
@@ -12,7 +12,15 @@ const initialState: NearbyOffersData = {
 export const nearbyOffers = createSlice({
   name: NameSpace.NearbyOffers,
   initialState,
-  reducers: {},
+  reducers: {
+    setFavoriteFromNearby(state, action: PayloadAction<Offer>) {
+      const nearbyFavorite = action.payload;
+
+      state.nearbyOffers = state.nearbyOffers.map((item: Offer) =>
+        item.id === nearbyFavorite.id ? nearbyFavorite : item
+      );
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchNearbyOffersAction.pending, (state) => {
@@ -34,4 +42,6 @@ export const nearbyOffers = createSlice({
       });
   },
 });
+
+export const { setFavoriteFromNearby } = nearbyOffers.actions;
 

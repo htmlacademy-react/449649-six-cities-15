@@ -7,7 +7,7 @@ import OffersList from '../../components/offer-list/offers-list';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
 import { fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
-import { AppRoute } from '../../const';
+import { AppRoute, UpdateSource } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Avatar from '../../components/avatar/avatar';
 import { getOffer, getOfferIsLoading, getOfferIsNotFound } from '../../store/offer-data/selectors';
@@ -37,7 +37,7 @@ function OfferPage(): JSX.Element {
     setselectedNearbyOffer(nearbyOffer);
   };
 
-  const handleBookmarkClick = useFavorites(offerId!, favoriteStatus);
+  const handleBookmarkClick = useFavorites(offerId!, favoriteStatus, UpdateSource.OfferPage);
 
   useEffect(() => {
     if (offerId) {

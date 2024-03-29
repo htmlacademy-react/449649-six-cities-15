@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_CITY, NameSpace, SORTING_OPTIONS } from '../../const';
-import { City, OffersData } from '../../types/types';
+import { City, Offer, OffersData } from '../../types/types';
 import { getCitiesFromOffers, getCitiesNames, getOffersByCity, offersSorting } from '../../utils';
 import { fetchOffersAction } from '../api-actions';
 
@@ -43,6 +43,12 @@ export const offers = createSlice({
     setCity(state, action: PayloadAction<City>) {
       state.city = action.payload;
     },
+    setFavoriteOffers(state, action: PayloadAction<Offer>) {
+      const offerFavorite = action.payload;
+      state.allOffers = state.allOffers.map((item: Offer) =>
+        item.id === offerFavorite.id ? offerFavorite : item
+      );
+    },
     setSortType(state, action: PayloadAction<string>) {
       state.sortType = action.payload;
       state.offersByCity = offersSorting(state.sortType, state.offersByCity);
@@ -71,4 +77,4 @@ export const offers = createSlice({
   },
 });
 
-export const { setOffers, setOffersByCity, setCity, setCityName, setCitiesNames, setAllCities, setSortType } = offers.actions;
+export const { setOffers, setOffersByCity, setCity, setCityName, setCitiesNames, setAllCities, setFavoriteOffers, setSortType } = offers.actions;
