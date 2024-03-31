@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, AuthData, Comment, FavoriteOffersData, FavoriteStatusData, Offer, Offers, Review, Reviews, State, UserAuth } from '../types/types';
+import { AppDispatch, AuthData, Comment, FavoriteStatusData, Offer, Offers, Review, Reviews, State, UserAuth } from '../types/types';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute, UpdateSource } from '../const';
 import { redirectToRoute } from './action';
@@ -81,7 +81,7 @@ export const submitCommentAction = createAsyncThunk<
 
 export const fetchFavoritesOffersAction = createAsyncThunk<
   Offers,
-  FavoriteOffersData,
+  undefined,
   {
     dispatch: AppDispatch;
     state: State;
@@ -106,7 +106,7 @@ export const setFavoriteAction = createAsyncThunk<
   switch (params.sourceUpdate) {
     case UpdateSource.MainPage:
       dispatch(setFavoriteOffers(data));
-      dispatch(fetchFavoritesOffersAction());
+      //отрисовать в стете
       break;
     case UpdateSource.OfferPage:
       dispatch(setFavoriteOffer(data.isFavorite));

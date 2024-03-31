@@ -26,7 +26,7 @@ function Header(): JSX.Element {
                     to={AppRoute.Favorites}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"
-                      style={{ backgroundImage: user?.avatarUrl }}
+                      style={{ backgroundImage: `url(${user?.avatarUrl})` }}
                     >
                     </div>
                     <span className="header__user-name user__name">{user?.name}</span>
