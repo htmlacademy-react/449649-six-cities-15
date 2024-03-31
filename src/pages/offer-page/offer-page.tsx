@@ -1,4 +1,4 @@
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { Offer } from '../../types/types';
 import Header from '../../components/header/header';
 import ReviewsList from '../../components/reviewsList/reviewsList';
@@ -23,13 +23,6 @@ function OfferPage(): JSX.Element {
   const nearbyOffers = useAppSelector(getNearbyOffers);
   const isOfferNotFound = useAppSelector(getOfferIsNotFound);
   const isOfferDataLoading = useAppSelector(getOfferIsLoading);
-  const location = useLocation();
-  if (location.pathname === '/') {
-
-
-  }
-
-
   const dispatch = useAppDispatch();
   const params = useParams();
   const offerId = params.id;
@@ -65,14 +58,14 @@ function OfferPage(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                {images && images.map((url, id) => {
-                  const keyValue = `${id}-${url}`;
-                  return (
-                    <img key={keyValue} className="offer__image" src={url} alt="Photo studio" />
-                  );
-                })}
-              </div>
+              {images && images.map((url, id) => {
+                const keyValue = `${id}-${url}`;
+                return (
+                  <div key={keyValue} className="offer__image-wrapper">
+                    <img className="offer__image" src={url} alt="Photo studio" />
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="offer__container container">
