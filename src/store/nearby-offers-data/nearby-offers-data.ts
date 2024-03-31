@@ -13,7 +13,7 @@ export const nearbyOffers = createSlice({
   name: NameSpace.NearbyOffers,
   initialState,
   reducers: {
-    setFavoriteFromNearby(state, action: PayloadAction<Offer>) {
+    setFavoriteOffersNearby(state, action: PayloadAction<Offer>) {
       const nearbyFavorite = action.payload;
 
       state.nearbyOffers = state.nearbyOffers.map((item: Offer) =>
@@ -43,5 +43,5 @@ export const nearbyOffers = createSlice({
   },
 });
 
-export const { setFavoriteFromNearby } = nearbyOffers.actions;
+export const { setFavoriteOffersNearby } = nearbyOffers.actions;
 

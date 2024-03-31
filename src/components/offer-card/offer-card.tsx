@@ -1,21 +1,20 @@
 import { Offer } from '../../types/types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useFavorites } from '../../hooks/useFavorites';
-import { OfferCardParams } from '../../const';
+import { getPreviewOptions } from '../../utils';
 
 type OfferCardProps = {
   offer: Offer;
-  page: keyof typeof OfferCardParams;
   setOfferCardHoverId?(id: string | null): void;
 }
 
-function OfferCard({ offer, page, setOfferCardHoverId }: OfferCardProps): JSX.Element {
+function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element {
   const { id, title, type, price, isFavorite, isPremium, rating, previewImage } = offer;
   const favoriteStatus = isFavorite ? 0 : 1;
-  const width = OfferCardParams[page].width;
-  const height = OfferCardParams[page].height;
-  const updateSource = OfferCardParams[page].updateSource;
-  const handleBookmarkClick = useFavorites(id, favoriteStatus, updateSource);
+  const location = useLocation();
+  const page = location.pathname.split('/')[1];
+  const previewOptions = getPreviewOptions(page);
+  const handleBookmarkClick = useFavorites(id, favoriteStatus);
 
   const handleMouseOver = () => {
     if (setOfferCardHoverId) {
@@ -37,8 +36,8 @@ function OfferCard({ offer, page, setOfferCardHoverId }: OfferCardProps): JSX.El
           <img
             className="place-card__image"
             src={previewImage}
-            width={width}
-            height={height}
+            width={previewOptions.width}
+            height={previewOptions.height}
             alt="Place image"
           />
         </Link>

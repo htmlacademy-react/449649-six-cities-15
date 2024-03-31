@@ -2,11 +2,11 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, AuthData, Comment, FavoriteStatusData, Offer, Offers, Review, Reviews, State, UserAuth } from '../types/types';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute, AppRoute, UpdateSource } from '../const';
+import { APIRoute, AppRoute } from '../const';
 import { redirectToRoute } from './action';
 import { setFavoriteOffer } from './offer-data/offer-data';
 import { setFavoriteOffers } from './offers-data/offers-data';
-import { setFavoriteFromNearby } from './nearby-offers-data/nearby-offers-data';
+import { setFavoriteOffersNearby } from './nearby-offers-data/nearby-offers-data';
 
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -103,28 +103,10 @@ export const setFavoriteAction = createAsyncThunk<
 >('setFavorites', async (params: FavoriteStatusData, { dispatch, extra: api }) => {
   const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${params.offerId}/${params.status}`);
 
-  switch (params.sourceUpdate) {
-    case UpdateSource.MainPage:
-      dispatch(setFavoriteOffers(data));
-      //отрисовать в стете
-      break;
-    case UpdateSource.OfferPage:
-      dispatch(setFavoriteOffer(data.isFavorite));
-      dispatch(setFavoriteOffers(data));
-      dispatch(setFavoriteFromNearby(data));
-      dispatch(fetchFavoritesOffersAction());
-      break;
-    case UpdateSource.FavoritesPage:
-      dispatch(setFavoriteOffers(data));
-      dispatch(setFavoriteOffer(data.isFavorite));
-      dispatch(setFavoriteFromNearby(data));
-      dispatch(fetchFavoritesOffersAction());
-      break;
-    case UpdateSource.NearbyOffersPage:
-      dispatch(setFavoriteFromNearby(data));
-      dispatch(fetchFavoritesOffersAction());
-      break;
-  }
+  dispatch(fetchFavoritesOffersAction());
+  dispatch(setFavoriteOffers(data));
+  dispatch(setFavoriteOffer(data.isFavorite));
+  dispatch(setFavoriteOffersNearby(data));
 
   return data;
 }

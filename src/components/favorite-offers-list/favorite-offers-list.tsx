@@ -38,7 +38,6 @@ function FavoriteOffersList({ city, offersByCity }: FavoritesCardListProps) {
           offersByCity.map((offer) => (
             <OfferCard
               key={offer.id}
-              page={'favoritePage'}
               offer={offer}
             />
           ))}

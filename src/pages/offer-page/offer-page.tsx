@@ -1,4 +1,4 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { Offer } from '../../types/types';
 import Header from '../../components/header/header';
 import ReviewsList from '../../components/reviewsList/reviewsList';
@@ -7,7 +7,7 @@ import OffersList from '../../components/offer-list/offers-list';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
 import { fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
-import { AppRoute, UpdateSource } from '../../const';
+import { AppRoute } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Avatar from '../../components/avatar/avatar';
 import { getOffer, getOfferIsLoading, getOfferIsNotFound } from '../../store/offer-data/selectors';
@@ -23,6 +23,12 @@ function OfferPage(): JSX.Element {
   const nearbyOffers = useAppSelector(getNearbyOffers);
   const isOfferNotFound = useAppSelector(getOfferIsNotFound);
   const isOfferDataLoading = useAppSelector(getOfferIsLoading);
+  const location = useLocation();
+  if (location.pathname === '/') {
+
+
+  }
+
 
   const dispatch = useAppDispatch();
   const params = useParams();
@@ -37,7 +43,7 @@ function OfferPage(): JSX.Element {
     setselectedNearbyOffer(nearbyOffer);
   };
 
-  const handleBookmarkClick = useFavorites(offerId!, favoriteStatus, UpdateSource.OfferPage);
+  const handleBookmarkClick = useFavorites(offerId!, favoriteStatus);
 
   useEffect(() => {
     if (offerId) {
@@ -140,7 +146,7 @@ function OfferPage(): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              <OffersList offers={nearbyOffers} page='nearbyOffersPage' setOfferCardHoverId={handleNearbyOfferHover} />
+              <OffersList offers={nearbyOffers} setOfferCardHoverId={handleNearbyOfferHover} />
             </div>
           </section>
         </div>

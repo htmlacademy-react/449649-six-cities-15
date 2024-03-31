@@ -55,43 +55,13 @@ export const DEFAULT_CITY: City = {
   }
 };
 
-export enum UpdateSource {
-  MainPage = 'UpdateFromMainPage',
-  OfferPage = 'UpdateFromOfferPage',
-  FavoritesPage = 'UpdateFromFavoritesPage',
-  NearbyOffersPage = 'UpdateFromNearbyOffersPage',
-}
-
-export const OfferCardParams = {
-  mainPage: {
-    width: 260,
-    height: 200,
-    updateSource: UpdateSource.MainPage
-  },
-  favoritePage: {
-    width: 150,
-    height: 110,
-    updateSource: UpdateSource.FavoritesPage
-  },
-  offerPage: {
-    width: 260,
-    height: 200,
-    updateSource: UpdateSource.OfferPage
-  },
-  nearbyOffersPage: {
-    width: 260,
-    height: 200,
-    updateSource: UpdateSource.NearbyOffersPage
-  }
-};
-
 export enum NameSpace {
   User = 'USER',
   Data = 'DATA',
   Offers = 'OFFERS',
   Offer = 'OFFER',
   Reviews = 'REVIEWS',
-  NearbyOffers = 'OFFERSNEARBY',
-  FavoriteOffers = 'FAVORITEOFFERS',
-  ErrorMessage = 'ERRORMESSAGE'
+  NearbyOffers = 'OFFERS_NEARBY',
+  FavoriteOffers = 'FAVORITE_OFFERS',
+  ErrorMessage = 'ERROR_MESSAGE'
 }

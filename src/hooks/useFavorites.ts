@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from './useApp';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { setFavoriteAction } from '../store/api-actions';
 
-export const useFavorites = (offerId: string, status: number, sourceUpdate: string) => {
+export const useFavorites = (offerId: string, status: number) => {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export const useFavorites = (offerId: string, status: number, sourceUpdate: stri
       navigate(AppRoute.Login);
     }
 
-    dispatch(setFavoriteAction({ offerId, status, sourceUpdate }));
+    dispatch(setFavoriteAction({ offerId, status }));
   }
 
   return handleFavoritesChange;

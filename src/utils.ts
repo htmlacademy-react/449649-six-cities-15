@@ -54,3 +54,18 @@ export function getCityByName(cityName: string, offers: Offers): City | undefine
   return foundOffer ? foundOffer.city : undefined;
 }
 
+export const getPreviewOptions = (routeName: string): { width: number; height: number } => {
+  if (routeName === 'favorites') {
+    return {
+      width: 150,
+      height: 110
+    };
+  } else {
+    return {
+      width: 260,
+      height: 200
+    };
+  }
+};
+
+
