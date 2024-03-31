@@ -4,7 +4,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import FavoritesEmptyPage from '../favorites-empty-page/favorites-empty-page';
 import { getFavoriteOffers, getIsFavoritesIsNotFound, getIsFavoritesLoading } from '../../store/favorite-offers-data/selectors';
 import { useEffect } from 'react';
-import { fetchFavoritesAction } from '../../store/api-actions';
+import { fetchFavoritesOffersAction } from '../../store/api-actions';
 import FavoriteOffersList from '../../components/favorite-offers-list/favorite-offers-list';
 import { groupOffersByCity } from '../../utils';
 
@@ -16,7 +16,7 @@ function FavoritesPage(): JSX.Element {
   const offersByCity = groupOffersByCity(favoriteOffers);
 
   useEffect(() => {
-    dispatch(fetchFavoritesAction());
+    dispatch(fetchFavoritesOffersAction());
   }, [dispatch]);
 
   return (

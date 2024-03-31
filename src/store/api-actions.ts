@@ -79,7 +79,7 @@ export const submitCommentAction = createAsyncThunk<
   return data;
 });
 
-export const fetchFavoritesAction = createAsyncThunk<
+export const fetchFavoritesOffersAction = createAsyncThunk<
   Offers,
   FavoriteOffersData,
   {
@@ -106,23 +106,23 @@ export const setFavoriteAction = createAsyncThunk<
   switch (params.sourceUpdate) {
     case UpdateSource.MainPage:
       dispatch(setFavoriteOffers(data));
-      dispatch(fetchFavoritesAction());
+      dispatch(fetchFavoritesOffersAction());
       break;
     case UpdateSource.OfferPage:
       dispatch(setFavoriteOffer(data.isFavorite));
       dispatch(setFavoriteOffers(data));
       dispatch(setFavoriteFromNearby(data));
-      dispatch(fetchFavoritesAction());
+      dispatch(fetchFavoritesOffersAction());
       break;
     case UpdateSource.FavoritesPage:
       dispatch(setFavoriteOffers(data));
       dispatch(setFavoriteOffer(data.isFavorite));
       dispatch(setFavoriteFromNearby(data));
-      dispatch(fetchFavoritesAction());
+      dispatch(fetchFavoritesOffersAction());
       break;
     case UpdateSource.NearbyOffersPage:
       dispatch(setFavoriteFromNearby(data));
-      dispatch(fetchFavoritesAction());
+      dispatch(fetchFavoritesOffersAction());
       break;
   }
 
