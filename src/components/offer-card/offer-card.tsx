@@ -1,22 +1,31 @@
 import { Offer } from '../../types/types';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useFavorites } from '../../hooks/useFavorites';
+import { getPreviewOptions } from '../../utils';
 
 type OfferCardProps = {
   offer: Offer;
-  setOfferCardHoverId(id: string | null): void;
+  setOfferCardHoverId?(id: string | null): void;
 }
 
 function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element {
   const { id, title, type, price, isFavorite, isPremium, rating, previewImage } = offer;
-  const [isFavoriteCard, setIsFavoriteCard] = useState(isFavorite);
+  const favoriteStatus = isFavorite ? 0 : 1;
+  const location = useLocation();
+  const page = location.pathname.split('/')[1];
+  const previewOptions = getPreviewOptions(page);
+  const handleBookmarkClick = useFavorites(id, favoriteStatus);
 
   const handleMouseOver = () => {
-    setOfferCardHoverId(id);
+    if (setOfferCardHoverId) {
+      setOfferCardHoverId(id);
+    }
   };
 
   const handleMouseOut = () => {
-    setOfferCardHoverId(null);
+    if (setOfferCardHoverId) {
+      setOfferCardHoverId(null);
+    }
   };
 
   return (
@@ -27,8 +36,8 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
           <img
             className="place-card__image"
             src={previewImage}
-            width={260}
-            height={200}
+            width={previewOptions.width}
+            height={previewOptions.height}
             alt="Place image"
           />
         </Link>
@@ -39,16 +48,13 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button onClick={() => setIsFavoriteCard(!isFavoriteCard)}
-            className={`place-card__bookmark-button ${isFavoriteCard ? 'place-card__bookmark-button--active' : ''} button`}
+          <button
+            onClick={() => handleBookmarkClick()}
+            className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
             type="button"
           >
-            <svg
-              className="place-card__bookmark-icon"
-              width={18}
-              height={19}
-            >
-              <use xlinkHref="#icon-bookmark" />
+            <svg className="place-card__bookmark-icon" width="18" height="19">
+              <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">To bookmarks</span>
           </button>

@@ -43,6 +43,7 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Nearby = '/nearby',
+  Favorite = '/favorite'
 }
 
 export const DEFAULT_CITY: City = {
@@ -60,6 +61,7 @@ export enum NameSpace {
   Offers = 'OFFERS',
   Offer = 'OFFER',
   Reviews = 'REVIEWS',
-  NearbyOffers = 'OFFERSNEARBY',
-  ErrorMessage = 'ERRORMESSAGE'
+  NearbyOffers = 'OFFERS_NEARBY',
+  FavoriteOffers = 'FAVORITE_OFFERS',
+  ErrorMessage = 'ERROR_MESSAGE'
 }

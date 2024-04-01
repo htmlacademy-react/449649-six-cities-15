@@ -4,10 +4,12 @@ import { useAppSelector } from '../../hooks/useApp';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link, NavLink } from 'react-router-dom';
 import { getAuthorizationStatus, getUser } from '../../store/user-data/selectors';
+import { getFavoriteOffers } from '../../store/favorite-offers-data/selectors';
 
 function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const isLoggedIn = authorizationStatus === AuthorizationStatus.Auth;
 
   return (
@@ -24,11 +26,11 @@ function Header(): JSX.Element {
                     to={AppRoute.Favorites}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"
-                      style={{ backgroundImage: user?.avatarUrl }}
+                      style={{ backgroundImage: `url(${user?.avatarUrl})` }}
                     >
                     </div>
-                    <span className="header__user-name user__name">{user?.name}</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__user-name user__name">{user?.email}</span>
+                    <span className="header__favorite-count">{favoriteOffers.length}</span>
                   </NavLink>
                 </li>
                 <li className="header__nav-item">
