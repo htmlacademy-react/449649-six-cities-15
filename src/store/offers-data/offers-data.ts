@@ -44,10 +44,11 @@ export const offers = createSlice({
       state.city = action.payload;
     },
     setFavoriteOffers(state, action: PayloadAction<Offer>) {
-      const offerFavorite = action.payload;
-      state.allOffers = state.allOffers.map((item: Offer) =>
-        item.id === offerFavorite.id ? offerFavorite : item
-      );
+      const updatedOffer = action.payload;
+      const index = state.offersByCity.findIndex((item: Offer) => item.id === updatedOffer.id);
+      if (index !== -1) {
+        state.offersByCity[index].isFavorite = updatedOffer.isFavorite;
+      }
     },
     setSortType(state, action: PayloadAction<string>) {
       state.sortType = action.payload;
