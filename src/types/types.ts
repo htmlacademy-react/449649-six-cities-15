@@ -109,7 +109,6 @@ export type UserProcess = {
 
 export type ReviewsData = {
   reviews: Reviews;
-  reviewsIsLoading: boolean;
   reviewStatus: FetchStatus;
 };
 

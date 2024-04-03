@@ -6,7 +6,6 @@ import { fetchReviewsAction, submitCommentAction } from '../api-actions';
 
 const initialState: ReviewsData = {
   reviews: [],
-  reviewsIsLoading: false,
   reviewStatus: FetchStatus.None
 };
 
@@ -17,30 +16,31 @@ export const reviews = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchReviewsAction.pending, (state) => {
-        state.reviewsIsLoading = true;
         state.reviewStatus = FetchStatus.Loading;
       })
-
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         const reviewsData = action.payload;
 
         if (reviewsData !== undefined && reviewsData !== null) {
           state.reviews = reviewsData;
         }
-
-        state.reviewsIsLoading = false;
         state.reviewStatus = FetchStatus.None;
       })
       .addCase(fetchReviewsAction.rejected, (state) => {
-        state.reviewsIsLoading = false;
         state.reviewStatus = FetchStatus.Rejected;
+      })
+      .addCase(submitCommentAction.pending, (state) => {
+        state.reviewStatus = FetchStatus.Loading;
       })
       .addCase(submitCommentAction.fulfilled, (state, action) => {
         const newReview = action.payload;
-
         if (newReview !== undefined && newReview !== null) {
           state.reviews.push(newReview);
         }
+        state.reviewStatus = FetchStatus.None;
+      })
+      .addCase(submitCommentAction.rejected, (state) => {
+        state.reviewStatus = FetchStatus.Rejected;
       });
   },
 });

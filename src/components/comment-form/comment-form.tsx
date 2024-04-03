@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, Fragment, FormEvent, useEffect } from 'react';
+import { useState, Fragment, FormEvent, useEffect } from 'react';
 import { FetchStatus, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RATING, REVIEW_INITIAL_STATE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
 import { submitCommentAction } from '../../store/api-actions';
@@ -13,6 +13,7 @@ function CommentForm({ offerId }: CommentProps): JSX.Element {
   const [formData, setFormData] = useState(REVIEW_INITIAL_STATE);
   const reviewStatus = useAppSelector(getReviewsStatus);
   const isSubmitting = reviewStatus === FetchStatus.Loading;
+  const isSubmitDisabled = formData.comment.length < MIN_COMMENT_LENGTH || formData.comment.length > MAX_COMMENT_LENGTH || formData.rating === REVIEW_INITIAL_STATE.rating || isSubmitting;
 
   useEffect(() => {
     if (reviewStatus === FetchStatus.None) {
@@ -20,23 +21,25 @@ function CommentForm({ offerId }: CommentProps): JSX.Element {
     }
   }, [reviewStatus]);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setFormData({ ...formData, rating: Number(value) });
+  };
+
+  const handleTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.target;
+    setFormData({ ...formData, comment: value });
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (offerId) {
+    if (offerId && !isSubmitDisabled) {
       dispatch(
         submitCommentAction({
           id: offerId,
           comment: formData.comment,
-          rating: Number(formData.rating),
+          rating: formData.rating,
         })
       );
     }
@@ -49,27 +52,25 @@ function CommentForm({ offerId }: CommentProps): JSX.Element {
       method="post"
       onSubmit={handleSubmit}
     >
-      <label className="reviews__label form__label" htmlFor="review">
-        Your review
-      </label>
+      <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
-          RATING.map((rating) => (
-            <Fragment key={rating.value}>
+          RATING.map((currentRating) => (
+            <Fragment key={currentRating.value}>
               <input
                 className="form__rating-input visually-hidden"
                 name="rating"
-                value={rating.value}
-                id={`${rating.value}-stars`}
+                value={currentRating.value}
+                id={`${currentRating.value}-stars`}
                 type="radio"
-                checked={formData.rating === rating.value}
-                disabled={isSubmitting}
-                onChange={handleChange}
+                checked={formData.rating === currentRating.value}
+                disabled={reviewStatus === FetchStatus.Loading}
+                onChange={handleInputChange}
               />
               <label
-                htmlFor={`${rating.value}-stars`}
+                htmlFor={`${currentRating.value}-stars`}
                 className="reviews__rating-label form__rating-label"
-                title={rating.name}
+                title={currentRating.name}
               >
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
@@ -85,8 +86,8 @@ function CommentForm({ offerId }: CommentProps): JSX.Element {
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.comment}
-        disabled={isSubmitting}
-        onChange={handleChange}
+        disabled={reviewStatus === FetchStatus.Loading}
+        onChange={handleTextAreaChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -97,12 +98,7 @@ function CommentForm({ offerId }: CommentProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={
-            formData.comment.length < MIN_COMMENT_LENGTH ||
-            formData.comment.length > MAX_COMMENT_LENGTH ||
-            formData.rating === 0 ||
-            isSubmitting
-          }
+          disabled={isSubmitDisabled}
         >
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
