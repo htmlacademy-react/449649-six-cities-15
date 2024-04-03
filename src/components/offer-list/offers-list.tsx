@@ -12,7 +12,7 @@ function OffersList({ offers, setOfferCardHoverId }: OffersListProps): JSX.Eleme
   const isOfferPage = currentPage.pathname.includes('offer');
 
   return (
-    <div className={`places__list ${isOfferPage ? 'cities__places-list tabs__content' : 'near-places__list'}`}>
+    <div className={`${isOfferPage ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'}`}>
       {offers.map((offer) => (
         <OfferCard key={offer.id} offer={offer} setOfferCardHoverId={setOfferCardHoverId} />
       ))}

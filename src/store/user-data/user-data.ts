@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, NameSpace } from '../../const';
 import { getToken } from '../../services/token';
 import { UserData, UserProcess } from '../../types/types'; // Import UserData type
-import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
+import { checkAuthAction, fetchFavoritesOffersAction, loginAction, logoutAction } from '../api-actions';
 
 const token = getToken();
 const initialState: UserProcess = {
@@ -23,6 +23,7 @@ export const user = createSlice({
           state.user = userData;
         }
         state.authorizationStatus = AuthorizationStatus.Auth;
+        fetchFavoritesOffersAction();
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;

@@ -30,7 +30,7 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
   };
 
   return (
-    <article className={`place-card ${isOfferPage ? 'near-places__card' : 'cities__card'} place-card`} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+    <article className={`${isOfferPage ? 'near-places__card' : 'cities__card'} place-card`} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className="place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
@@ -62,7 +62,7 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${setRatingStars(rating)}%` }} />
+            <span style={{ width: `${setRatingStars(rating)}` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -76,7 +76,7 @@ export function sortReviewsByDate(reviews: Reviews): Reviews {
   });
 }
 
-export const setRatingStars = (rating: number): string => `${(Math.round(rating) * 20)}%`;
+export const setRatingStars = (rating: number): string => `${(Math.round(rating) * 100 / 5)}%`;
 
 export const getRandomInteger = (a: number, b: number): number => {
   const lower = Math.ceil(Math.min(a, b));
