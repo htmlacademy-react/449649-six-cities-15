@@ -1,5 +1,6 @@
 import OfferCard from '../offer-card/offer-card';
 import { Offers } from '../../types/types';
+import { useLocation } from 'react-router-dom';
 
 type OffersListProps = {
   offers: Offers;
@@ -7,14 +8,16 @@ type OffersListProps = {
 }
 
 function OffersList({ offers, setOfferCardHoverId }: OffersListProps): JSX.Element {
+  const currentPage = useLocation();
+  const isOfferPage = currentPage.pathname.includes('offer');
+
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`${isOfferPage ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'}`}>
       {offers.map((offer) => (
         <OfferCard key={offer.id} offer={offer} setOfferCardHoverId={setOfferCardHoverId} />
       ))}
     </div>
   );
 }
-
 
 export default OffersList;

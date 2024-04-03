@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, AuthData, Comment, FavoriteStatusData, Offer, Offers, Review, Reviews, State, UserAuth } from '../types/types';
+import { AppDispatch, AuthData, Comment, FavoriteStatusData, Offer, Offers, Review, Reviews, State, UserAuth, UserData } from '../types/types';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute } from '../const';
 import { redirectToRoute } from './action';
@@ -56,7 +56,6 @@ export const fetchNearbyOffersAction = createAsyncThunk<
   }
 >('fetchOffersNearby', async (_arg, { extra: api }) => {
   const id = _arg;
-
   const { data } = await api.get<Offers>(`${APIRoute.Offers}/${id}${APIRoute.Nearby}`);
 
   return data;
@@ -112,12 +111,15 @@ export const setFavoriteAction = createAsyncThunk<
 }
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }
->('checkAuth', async (_arg, { extra: api }) => await api.get(APIRoute.Login));
+>('checkAuth', async (_arg, { extra: api }) => {
+  const { data } = await api.get<UserData>(APIRoute.Login);
+  return data;
+});
 
 export const loginAction = createAsyncThunk<UserAuth, AuthData, {
   dispatch: AppDispatch;

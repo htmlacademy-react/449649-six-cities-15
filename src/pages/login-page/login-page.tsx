@@ -1,27 +1,42 @@
 import Logo from '../../components/logo/logo';
-import { useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/useApp';
+import { FormEvent, useMemo, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
 import { loginAction } from '../../store/api-actions';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus, CITIES } from '../../const';
+import { getRandomInteger } from '../../utils';
+import { setCity, setCityName, setOffersByCity } from '../../store/offers-data/offers-data';
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
 
 function LoginPage(): JSX.Element {
-  const [formData, setFormData] = useState({ login: '', password: '' });
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isLoggedIn = authorizationStatus === AuthorizationStatus.Auth;
+  const randomCityName = useMemo(() => CITIES[getRandomInteger(0, CITIES.length - 1)].name, []);
+
+  const handleCityClick = (city: string) => {
+    const selectedCity = CITIES.find((item) => item.name === city);
+
+    if (selectedCity) {
+      dispatch(setCityName(city));
+      dispatch(setCity(selectedCity));
+      dispatch(setOffersByCity());
+    }
+  };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(loginAction(formData));
-    navigate(AppRoute.Main);
-  };
-
-  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    const loginValue = loginRef.current?.value;
+    const passwordValue = passwordRef.current?.value;
+    if (loginValue !== undefined && passwordValue !== undefined) {
+      dispatch(loginAction({ login: loginValue, password: passwordValue }));
+      if (isLoggedIn) {
+        navigate(AppRoute.Main);
+      }
+    }
   };
 
   return (
@@ -47,10 +62,9 @@ function LoginPage(): JSX.Element {
                 <input
                   className="login__input form__input"
                   type="email"
-                  name="login"
+                  name="email"
                   placeholder="Email"
-                  value={formData.login}
-                  onChange={handleChange}
+                  ref={loginRef}
                   required
                 />
               </div>
@@ -61,8 +75,8 @@ function LoginPage(): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  value={formData.password}
-                  onChange={handleChange}
+                  ref={passwordRef}
+                  pattern="(?=^.{2,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Za-z]).*"
                   required
                 />
               </div>
@@ -73,9 +87,13 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                onClick={() => handleCityClick(randomCityName)}
+                to={AppRoute.Main}
+              >
+                <span>{randomCityName}</span>
+              </Link>
             </div>
           </section>
         </div>

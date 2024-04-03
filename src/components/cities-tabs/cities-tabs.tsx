@@ -1,16 +1,15 @@
+import { CITIES } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
 import { setCity, setCityName, setOffersByCity } from '../../store/offers-data/offers-data';
-import { getAllCities, getAllCitiesNames, getCityName } from '../../store/offers-data/selectors';
+import { getCityName } from '../../store/offers-data/selectors';
 
 function CitiesTabs(): JSX.Element {
   const cityName = useAppSelector(getCityName);
-  const allCities = useAppSelector(getAllCities);
-  const citiesNames = useAppSelector(getAllCitiesNames);
-
+  const citiesNames: string[] = CITIES.map((city) => city.name);
   const dispatch = useAppDispatch();
 
   const handleCityClick = (city: string) => {
-    const selectedCity = allCities.find((item) => item.name === city);
+    const selectedCity = CITIES.find((item) => item.name === city);
 
     if (selectedCity) {
       dispatch(setCityName(city));
@@ -27,8 +26,7 @@ function CitiesTabs(): JSX.Element {
           <ul className="locations__list tabs__list">
             {citiesNames.map((city: string) => (
               <li className="locations__item" key={city}>
-                <a
-                  className={`locations__item-link tabs__item ${city === cityName ? 'tabs__item--active' : ''}`}
+                <a className={`locations__item-link tabs__item ${city === cityName ? 'tabs__item--active' : ''}`}
                   onClick={() => handleCityClick(city)}
                 >
                   <span>{city}</span>

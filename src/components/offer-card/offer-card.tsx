@@ -1,7 +1,7 @@
 import { Offer } from '../../types/types';
 import { Link, useLocation } from 'react-router-dom';
 import { useFavorites } from '../../hooks/useFavorites';
-import { getPreviewOptions } from '../../utils';
+import { getPreviewOptions, setRatingStars } from '../../utils';
 
 type OfferCardProps = {
   offer: Offer;
@@ -15,6 +15,7 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
   const page = location.pathname.split('/')[1];
   const previewOptions = getPreviewOptions(page);
   const handleBookmarkClick = useFavorites(id, favoriteStatus);
+  const isOfferPage = location.pathname.includes('offer');
 
   const handleMouseOver = () => {
     if (setOfferCardHoverId) {
@@ -29,10 +30,10 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
   };
 
   return (
-    <article className="cities__card place-card" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+    <article className={`${isOfferPage ? 'near-places__card' : 'cities__card'} place-card`} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link key={offer.id} to={`/offer/${offer.id}`}>
+      <div className="place-card__image-wrapper">
+        <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -49,7 +50,7 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
-            onClick={() => handleBookmarkClick()}
+            onClick={handleBookmarkClick}
             className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
             type="button"
           >
@@ -61,12 +62,12 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${rating * 20}%` }} />
+            <span style={{ width: `${setRatingStars(rating)}` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${id}`}>
+          <Link to={`/offer/${id}`}>
             {title}
           </Link>
         </h2>
