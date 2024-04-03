@@ -1,4 +1,4 @@
-import { AuthorizationStatus, NameSpace } from '../const';
+import { AuthorizationStatus, FetchStatus, NameSpace } from '../const';
 import { store } from '../store';
 
 export type AuthData = {
@@ -110,7 +110,7 @@ export type UserProcess = {
 export type ReviewsData = {
   reviews: Reviews;
   reviewsIsLoading: boolean;
-  reviewsIsNotFound: boolean;
+  reviewStatus: FetchStatus;
 };
 
 export type NearbyOffersData = {

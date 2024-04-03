@@ -1,15 +1,17 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import useMap from '../../hooks/useMap';
 import { City, Offer, Offers } from '../../types/types';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 import 'leaflet/dist/leaflet.css';
+import { useLocation } from 'react-router-dom';
 
 type MapProps = {
   className: string;
   city: City;
   offers: Offers;
   selectedOffer: Offer | undefined;
+  currentOffer?: Offer | null;
 };
 
 function createCustomIcon(iconUrl: string): Icon {
@@ -20,28 +22,50 @@ function createCustomIcon(iconUrl: string): Icon {
   });
 }
 
-function Map({ className, city, offers, selectedOffer }: MapProps): JSX.Element {
+function Map({ className, city, offers, selectedOffer, currentOffer }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const location = useLocation();
+  const isOfferPage = location.pathname.includes('offer');
+
+  const getMarkerIcon = useCallback((offer: Offer): Icon => {
+    const isCurrentOffer = currentOffer && offer.id === currentOffer.id;
+
+    if (isOfferPage) {
+      return isCurrentOffer
+        ? createCustomIcon(URL_MARKER_CURRENT)
+        : createCustomIcon(URL_MARKER_DEFAULT);
+    } else {
+      const isNearbyOffer = selectedOffer !== undefined && offer.id === selectedOffer?.id;
+      return isNearbyOffer
+        ? createCustomIcon(URL_MARKER_CURRENT)
+        : createCustomIcon(URL_MARKER_DEFAULT);
+    }
+  }, [currentOffer, isOfferPage, selectedOffer]);
+
 
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
-      offers.forEach((offer) => {
-        const marker = new Marker([offer.location.latitude, offer.location.longitude], {
-          icon: selectedOffer !== undefined && offer.id === selectedOffer.id
-            ? createCustomIcon(URL_MARKER_CURRENT)
-            : createCustomIcon(URL_MARKER_DEFAULT)
-        });
-
+      const markers = offers.map((offer) => {
+        const marker = new Marker([offer.location.latitude, offer.location.longitude]);
+        marker.setIcon(getMarkerIcon(offer));
         marker.addTo(markerLayer);
+        return marker;
       });
+
+      if (currentOffer) {
+        const currentOfferMarker = new Marker([currentOffer.location.latitude, currentOffer.location.longitude]);
+        currentOfferMarker.setIcon(getMarkerIcon(currentOffer));
+        currentOfferMarker.addTo(markerLayer);
+        markers.push(currentOfferMarker);
+      }
 
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, currentOffer, getMarkerIcon]);
 
   useEffect(() => {
     if (map) {

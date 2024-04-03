@@ -1,4 +1,4 @@
-import { Cities, City, Offer, Offers } from './types/types';
+import { Cities, City, Offer, Offers, Reviews } from './types/types';
 import { SORTING_OPTIONS } from './const';
 
 export function offersSorting(type: string, list: Offers) {
@@ -68,4 +68,20 @@ export const getPreviewOptions = (routeName: string): { width: number; height: n
   }
 };
 
+export function sortReviewsByDate(reviews: Reviews): Reviews {
+  return reviews.slice().sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA;
+  });
+}
 
+export const setRatingStars = (rating: number): string => `${(Math.round(rating) * 20)}%`;
+
+export const getRandomInteger = (a: number, b: number): number => {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+  const result = Math.random() * (upper - lower + 1) + lower;
+
+  return Math.floor(result);
+};

@@ -24,7 +24,6 @@ export const user = createSlice({
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         const userData = action.payload;
-
         state.authorizationStatus = AuthorizationStatus.Auth;
 
         if (userData !== undefined && userData !== null) {

@@ -15,19 +15,20 @@ import { getCity } from '../../store/offers-data/selectors';
 import { getReviews } from '../../store/review-data/selectors';
 import { getNearbyOffers } from '../../store/nearby-offers-data/selectors';
 import { useFavorites } from '../../hooks/useFavorites';
+import { setRatingStars } from '../../utils';
 
 function OfferPage(): JSX.Element {
-  const offerFromState = useAppSelector(getOffer);
+  const currentOffer = useAppSelector(getOffer);
   const city = useAppSelector(getCity);
   const reviews = useAppSelector(getReviews);
-  const nearbyOffers = useAppSelector(getNearbyOffers);
+  const nearbyOffers = useAppSelector(getNearbyOffers).slice(0, 3);
   const isOfferNotFound = useAppSelector(getOfferIsNotFound);
   const isOfferDataLoading = useAppSelector(getOfferIsLoading);
   const dispatch = useAppDispatch();
   const params = useParams();
   const offerId = params.id;
 
-  const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, isFavorite, images, host, goods } = offerFromState || {};
+  const { title, type, price, rating, bedrooms, maxAdults, isPremium, description, isFavorite, images, host, goods } = currentOffer || {};
   const favoriteStatus = isFavorite ? 0 : 1;
   const [selectedNearbyOffer, setselectedNearbyOffer] = useState<Offer | undefined>(undefined);
 
@@ -58,7 +59,7 @@ function OfferPage(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {images && images.map((url, id) => {
+              {images && images.slice(0, 6).map((url, id) => {
                 const keyValue = `${id}-${url}`;
                 return (
                   <div key={keyValue} className="offer__image-wrapper">
@@ -70,9 +71,13 @@ function OfferPage(): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                {isPremium && <span>Premium</span>}
-              </div>
+              {
+                isPremium ?
+                  <div className="offer__mark">
+                    <span>Premium</span>
+                  </div>
+                  : null
+              }
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
                 <button
@@ -88,15 +93,27 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${rating && rating * 20}%` }} />
+                  <span style={{ width: `${setRatingStars(rating!)}` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">{type}</li>
-                <li className="offer__feature offer__feature--bedrooms">{bedrooms}</li>
-                <li className="offer__feature offer__feature--adults">Max {maxAdults} adults</li>
+                {
+                  bedrooms !== undefined ?
+                    <li className="offer__feature offer__feature--bedrooms">
+                      {bedrooms} Bedrooms
+                    </li>
+                    : null
+                }
+                {
+                  maxAdults !== undefined ?
+                    <li className="offer__feature offer__feature--adults">
+                      Max {maxAdults} adults
+                    </li>
+                    : null
+                }
               </ul>
               <div className="offer__price">
                 <b className="offer__price-value">€{price}</b>
@@ -131,7 +148,7 @@ function OfferPage(): JSX.Element {
               <ReviewsList reviews={reviews} offerId={offerId} />
             </div>
           </div>
-          <Map className='offer__map map' city={city} offers={nearbyOffers} selectedOffer={selectedNearbyOffer} />
+          <Map className='offer__map map' city={city} offers={nearbyOffers} currentOffer={currentOffer} selectedOffer={selectedNearbyOffer} />
         </section>
         <div className="container">
           <section className="near-places places">

@@ -6,7 +6,6 @@ function CitiesTabs(): JSX.Element {
   const cityName = useAppSelector(getCityName);
   const allCities = useAppSelector(getAllCities);
   const citiesNames = useAppSelector(getAllCitiesNames);
-
   const dispatch = useAppDispatch();
 
   const handleCityClick = (city: string) => {
@@ -27,8 +26,7 @@ function CitiesTabs(): JSX.Element {
           <ul className="locations__list tabs__list">
             {citiesNames.map((city: string) => (
               <li className="locations__item" key={city}>
-                <a
-                  className={`locations__item-link tabs__item ${city === cityName ? 'tabs__item--active' : ''}`}
+                <a className={`locations__item-link tabs__item ${city === cityName ? 'tabs__item--active' : ''}`}
                   onClick={() => handleCityClick(city)}
                 >
                   <span>{city}</span>

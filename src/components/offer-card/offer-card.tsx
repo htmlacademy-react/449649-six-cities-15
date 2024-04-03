@@ -1,7 +1,7 @@
 import { Offer } from '../../types/types';
 import { Link, useLocation } from 'react-router-dom';
 import { useFavorites } from '../../hooks/useFavorites';
-import { getPreviewOptions } from '../../utils';
+import { getPreviewOptions, setRatingStars } from '../../utils';
 
 type OfferCardProps = {
   offer: Offer;
@@ -61,7 +61,7 @@ function OfferCard({ offer, setOfferCardHoverId }: OfferCardProps): JSX.Element 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${rating * 20}%` }} />
+            <span style={{ width: setRatingStars(rating) }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
