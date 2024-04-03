@@ -1,4 +1,4 @@
-import { City } from './types/types';
+import { Cities } from './types/types';
 
 export const SORTING_OPTIONS = {
   POPULAR: 'Popular',
@@ -12,20 +12,22 @@ export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 300;
-export const RATING_MAP = {
-  'perfect': '5',
-  'good': '4',
-  'not bad': '3',
-  'badly': '2',
-  'terribly': '1'
-};
+export const CITIES: Cities = [
+  { name: 'Paris', location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 } },
+  { name: 'Cologne', location: { latitude: 50.938361, longitude: 6.959974, zoom: 13 } },
+  { name: 'Brussels', location: { latitude: 50.846557, longitude: 4.351697, zoom: 13 } },
+  { name: 'Amsterdam', location: { latitude: 52.37454, longitude: 4.897976, zoom: 13 } },
+  { name: 'Hamburg', location: { latitude: 53.550341, longitude: 10.000654, zoom: 13 } },
+  { name: 'Dusseldorf', location: { latitude: 51.225402, longitude: 6.776314, zoom: 13 } }
+];
+export const DEFAULT_CITY = CITIES[0];
 
 export const RATING = [
-  {value: 5, name: 'perfect'},
-  {value: 4, name: 'good'},
-  {value: 3, name: 'not bad'},
-  {value: 2, name: 'badly'},
-  {value: 1, name: 'terribly'}
+  { value: 5, name: 'perfect' },
+  { value: 4, name: 'good' },
+  { value: 3, name: 'not bad' },
+  { value: 2, name: 'badly' },
+  { value: 1, name: 'terribly' }
 ];
 
 export const REVIEW_INITIAL_STATE = {
@@ -56,15 +58,6 @@ export enum APIRoute {
   Favorite = '/favorite'
 }
 
-export const DEFAULT_CITY: City = {
-  name: 'Paris',
-  location: {
-    latitude: 48.85661,
-    longitude: 2.351499,
-    zoom: 12
-  }
-};
-
 export enum NameSpace {
   User = 'USER',
   Data = 'DATA',
@@ -78,6 +71,6 @@ export enum NameSpace {
 
 export enum FetchStatus {
   Loading = 'loading',
-  Rejected ='rejected',
+  Rejected = 'rejected',
   None = 'none',
 }
