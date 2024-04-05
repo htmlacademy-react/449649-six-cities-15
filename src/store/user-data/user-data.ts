@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, NameSpace } from '../../const';
-import { UserData, UserProcess } from '../../types/types'; // Import UserData type
+import { UserData, UserProcess } from '../../types/types';
 import { checkAuthAction, fetchFavoritesOffersAction, loginAction, logoutAction } from '../api-actions';
 
 const initialState: UserProcess = {
@@ -12,7 +12,7 @@ export const user = createSlice({
   name: NameSpace.User,
   initialState,
   reducers: {
-    assignauthorizationStatusByDefault: (state) => {
+    assignDefaultAuthStatus: (state) => {
       state.authorizationStatus = AuthorizationStatus.Unknown;
     }
   },
@@ -47,4 +47,4 @@ export const user = createSlice({
   },
 });
 
-export const { assignauthorizationStatusByDefault } = user.actions;
+export const { assignDefaultAuthStatus } = user.actions;

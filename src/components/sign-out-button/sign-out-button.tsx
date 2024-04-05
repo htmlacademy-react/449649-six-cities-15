@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/useApp';
 import { AppRoute } from '../../const';
-import { assignauthorizationStatusByDefault } from '../../store/user-data/user-data';
+import { assignDefaultAuthStatus } from '../../store/user-data/user-data';
 
 function SignOutButton(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ function SignOutButton(): JSX.Element {
       onClick={(evt) => {
         evt.preventDefault();
         dispatch(logoutAction());
-        dispatch(assignauthorizationStatusByDefault());
+        dispatch(assignDefaultAuthStatus());
       }}
       to={AppRoute.Login}
     >
