@@ -102,7 +102,6 @@ export const setFavoriteAction = createAsyncThunk<
 >('setFavorites', async (params: FavoriteStatusData, { dispatch, extra: api }) => {
   const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${params.offerId}/${params.status}`);
 
-  dispatch(fetchFavoritesOffersAction());
   dispatch(setFavoriteOffers(data));
   dispatch(setFavoriteOffer(data.isFavorite));
   dispatch(setFavoriteOffersNearby(data));

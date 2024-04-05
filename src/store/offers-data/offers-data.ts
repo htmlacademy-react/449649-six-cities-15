@@ -20,11 +20,6 @@ export const offers = createSlice({
   name: NameSpace.Offers,
   initialState,
   reducers: {
-    setOffers(state) {
-      if (state.allOffers.length) {
-        state.allOffers = offersSorting(state.sortType, state.allOffers);
-      }
-    },
     setOffersByCity(state) {
       if (state.allOffers.length) {
         state.offersByCity = getOffersByCity(state.allOffers, state.city);
@@ -44,11 +39,10 @@ export const offers = createSlice({
       state.city = action.payload;
     },
     setFavoriteOffers(state, action: PayloadAction<Offer>) {
-      const updatedOffer = action.payload;
-      const index = state.offersByCity.findIndex((item: Offer) => item.id === updatedOffer.id);
-      if (index !== -1) {
-        state.offersByCity[index].isFavorite = updatedOffer.isFavorite;
-      }
+      const offerFavorite = action.payload;
+      state.offersByCity = state.offersByCity.map((item: Offer) =>
+        item.id === offerFavorite.id ? offerFavorite : item
+      );
     },
     setSortType(state, action: PayloadAction<string>) {
       state.sortType = action.payload;
@@ -65,9 +59,6 @@ export const offers = createSlice({
         (state, action) => {
           state.allOffers = action.payload;
           state.isOffersLoading = false;
-          offers.caseReducers.setCitiesNames(state);
-          offers.caseReducers.setAllCities(state);
-          offers.caseReducers.setOffers(state);
           offers.caseReducers.setOffersByCity(state);
         }
       )
@@ -78,4 +69,4 @@ export const offers = createSlice({
   },
 });
 
-export const { setOffers, setOffersByCity, setCity, setCityName, setCitiesNames, setAllCities, setFavoriteOffers, setSortType } = offers.actions;
+export const { setOffersByCity, setCity, setCityName, setCitiesNames, setAllCities, setFavoriteOffers, setSortType } = offers.actions;
