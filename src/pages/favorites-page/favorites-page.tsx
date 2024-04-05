@@ -2,7 +2,7 @@ import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FavoritesEmptyPage from '../favorites-empty-page/favorites-empty-page';
-import { getFavoriteOffers, getIsFavoritesIsNotFound, getIsFavoritesLoading } from '../../store/favorite-offers-data/selectors';
+import { getFavoriteOffers, getFavoritesLength, getIsFavoritesLoading } from '../../store/favorite-offers-data/selectors';
 import { useEffect } from 'react';
 import { fetchFavoritesOffersAction } from '../../store/api-actions';
 import FavoriteOffersList from '../../components/favorite-offers-list/favorite-offers-list';
@@ -12,7 +12,7 @@ function FavoritesPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const favoriteOffers = useAppSelector(getFavoriteOffers);
   const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
-  const isFavoritesNotFound = useAppSelector(getIsFavoritesIsNotFound);
+  const favoritesLength = useAppSelector(getFavoritesLength);
   const offersByCity = groupOffersByCity(favoriteOffers);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function FavoritesPage(): JSX.Element {
       <Header />
       <main className="page__main page__main--favorites">
         {isFavoritesLoading && <LoadingScreen />}
-        {isFavoritesNotFound ? (
+        {!favoritesLength ? (
           <FavoritesEmptyPage />
         ) : (
           <div className="page__favorites-container container">

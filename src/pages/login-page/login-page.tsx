@@ -1,5 +1,5 @@
 import Logo from '../../components/logo/logo';
-import { FormEvent, useMemo, useRef } from 'react';
+import { FormEvent, useEffect, useMemo, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
 import { loginAction } from '../../store/api-actions';
@@ -14,7 +14,6 @@ function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isLoggedIn = authorizationStatus === AuthorizationStatus.Auth;
   const randomCityName = useMemo(() => CITIES[getRandomInteger(0, CITIES.length - 1)].name, []);
 
   const handleCityClick = (city: string) => {
@@ -33,11 +32,14 @@ function LoginPage(): JSX.Element {
     const passwordValue = passwordRef.current?.value;
     if (loginValue !== undefined && passwordValue !== undefined) {
       dispatch(loginAction({ login: loginValue, password: passwordValue }));
-      if (isLoggedIn) {
-        navigate(AppRoute.Main);
-      }
     }
   };
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  }, [authorizationStatus, navigate]);
 
   return (
     <div className="page page--gray page--login">
