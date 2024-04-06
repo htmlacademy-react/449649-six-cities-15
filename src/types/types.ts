@@ -38,14 +38,6 @@ export type Location = {
   zoom: number;
 }
 
-export type Point = {
-  id: string;
-  lat: number;
-  lng: number;
-};
-
-export type Points = Point[];
-
 export type Offer = {
   id: string;
   title: string;
